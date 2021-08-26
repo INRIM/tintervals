@@ -1,8 +1,10 @@
 # tintervals
 
-A collection of functions and tools to work with time intervals and to convert time data.
+A python package collecting  functions and tools to work with time intervals and to convert time data.
 
-## Basic usage
+## Installation
+
+`pip3 install git+https://gitlab.ininrim.it/m.pizzocaro/tintervals.git`
 
 ## Requirements
 
