@@ -16,6 +16,8 @@ A python package collecting  functions and tools to work with time intervals and
 
 ## Basic usage
 
+`import tintervals as ti`
+
 Functions to convert timetag formats (based on `ciso8601` and `astropy.time`):
 | Function | Description | 
 | ------ | ------ |
@@ -28,7 +30,7 @@ Functions to manipulate array of timetags or array of start/stop intervals
 | ------ | ------ |
 | array2intervals | convert from an array of timetags to an array of start/stop intervals |
 | mix | take the intersection of two arrays of start/stop intervals |
-| split | Subdivide an array of start/stop intervals to a finer scale (e.g., every 10 s)|
+| split | Subdivide an array of start/stop intervals to a fixed scale (e.g., every 10 s)|
 | csaverage | Average data given for some start/stop intervals in different start/stop intervals|
 
 
