@@ -29,27 +29,31 @@ def myvectorize(f):
     return newfunc
 
 
-@myvectorize
+
 def kk2iso(s, year_digits='20'):
 	return year_digits + s.replace("*", " ")
 
-@myvectorize
-def iso2datetime(s):
-	return ciso.parse_datetime(s)
+
+def iso2datetime(s, tzinfo=None):
+	
+	if tzinfo:
+		return ciso.parse_datetime_as_naive(s).replace(tzinfo=tzinfo)
+	else:
+		return ciso.parse_datetime(s)
 
 
 
 # inspiration
 # https://stackoverflow.com/questions/2150739/iso-time-iso-8601-in-python
-@myvectorize
+
 def datetime2iso(d):
 	return d.replace(microsecond=0).isoformat().replace('+00:00','Z')
 
-@myvectorize
+
 def datetime2epoch(d):
 	return d.timestamp()
 
-@myvectorize
+
 def epoch2datetime(t):
 	return datetime.fromtimestamp(t, tz=timezone.utc)
 
@@ -60,13 +64,23 @@ def epoch2mjd(epoch):
 def mjd2epoch(mjd):
 	return Time(mjd, format='mjd', scale='utc').to_value('unix') 
 	
-	
+
 def kk2epoch(s, year_digits='20'):
-	return datetime2epoch(iso2datetime(kk2iso(s, year_digits)))
+	return datetime2epoch(ciso.parse_datetime_as_naive(kk2iso(s, year_digits)))
 	
 def iso2epoch(s):
 	return datetime2epoch(iso2datetime(s))
 
+@myvectorize
+def epoch2iso(t):
+	return datetime2iso(epoch2datetime(t))
 	
+@myvectorize
+def mjd2iso(mjd):
+	return epoch2iso(mjd2epoch(mjd))
+	
+
+
+
 
 

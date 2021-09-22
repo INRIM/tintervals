@@ -39,6 +39,8 @@ cmds = [
 "ti.epoch2datetime(1632319901)",
 "ti.epoch2mjd(1632319901)",
 "ti.mjd2epoch(59479.356)",
+"ti.epoch2iso(1632319901)",
+"ti.mjd2iso(59479.356)"
 ]
 
 for cmd in cmds:
