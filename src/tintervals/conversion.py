@@ -1,7 +1,6 @@
 
 from datetime import datetime, timezone
 from astropy.time import Time
-import tzlocal
 
 import numpy as np
 
