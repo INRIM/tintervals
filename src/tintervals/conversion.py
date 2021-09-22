@@ -58,10 +58,10 @@ def epoch2datetime(t):
 	return datetime.fromtimestamp(t, tz=timezone.utc)
 
 
-def epoch2mjd(epoch):
+def mjd_from_epoch(epoch):
 	return Time(epoch, format='unix').to_value('mjd') 
 
-def mjd2epoch(mjd):
+def epoch_from_mjd(mjd):
 	return Time(mjd, format='mjd', scale='utc').to_value('unix') 
 	
 
@@ -72,12 +72,12 @@ def iso2epoch(s):
 	return datetime2epoch(iso2datetime(s))
 
 @myvectorize
-def epoch2iso(t):
+def iso_from_epoch(t):
 	return datetime2iso(epoch2datetime(t))
 	
 @myvectorize
-def mjd2iso(mjd):
-	return epoch2iso(mjd2epoch(mjd))
+def iso_from_mjd(mjd):
+	return iso_from_epoch(epoch_from_mjd(mjd))
 	
 
 

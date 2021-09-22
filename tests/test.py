@@ -16,11 +16,11 @@ assert ti.kk2epoch('211212*131212') == test.timestamp()
 
 
 
-assert ti.epoch2datetime(ti.mjd2epoch(60_000))  == datetime(2023, 2, 25, 0, 0, tzinfo=timezone.utc)
+assert ti.epoch2datetime(ti.epoch_from_mjd(60_000))  == datetime(2023, 2, 25, 0, 0, tzinfo=timezone.utc)
 
 assert ti.datetime2epoch(datetime(2021, 9, 22, 14, 25, 7, tzinfo=timezone.utc)) == 1632320707
 
-assert ti.epoch2mjd(ti.datetime2epoch(datetime(2021, 9, 22, 0, 0, 0, tzinfo=timezone.utc))) == 59479.
+assert ti.mjd_from_epoch(ti.datetime2epoch(datetime(2021, 9, 22, 0, 0, 0, tzinfo=timezone.utc))) == 59479.
 
 
 # some timing
@@ -37,10 +37,10 @@ cmds = [
 "ti.datetime2iso(datetime(2021,9,22,11,12,tzinfo=timezone.utc))",
 "ti.datetime2epoch(datetime(2021,9,22,11,12,tzinfo=timezone.utc))",
 "ti.epoch2datetime(1632319901)",
-"ti.epoch2mjd(1632319901)",
-"ti.mjd2epoch(59479.356)",
-"ti.epoch2iso(1632319901)",
-"ti.mjd2iso(59479.356)"
+"ti.mjd_from_epoch(1632319901)",
+"ti.epoch_from_mjd(59479.356)",
+"ti.iso_from_epoch(1632319901)",
+"ti.iso_from_mjd(59479.356)"
 ]
 
 for cmd in cmds:
