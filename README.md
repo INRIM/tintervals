@@ -11,7 +11,6 @@ A python package collecting  functions and tools to work with time intervals and
 * `numpy`, `scipy`
 * `datetime`
 * `astropy`
-* `tzlocal`
 * `ciso8601`
 
 ## Basic usage
@@ -31,8 +30,8 @@ Fast functions used as converters when importing files:
 | `datetime2epoch`| `datetime`*        | Epoch |
 | `epoch2datetime`| Epoch              | Datetime |
 
-Starred inputs, if naive are considered as system time.
-K+K format is always naive.
+Starred inputs, if naive are considered as system/local time.
+K+K format is always naive and interreted as sytem/local time.
 
 Vectorized functions:
 | Function        | From               | To    | 
