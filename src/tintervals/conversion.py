@@ -71,14 +71,19 @@ def kk2epoch(s, year_digits='20'):
 def iso2epoch(s):
 	return datetime2epoch(iso2datetime(s))
 
-@myvectorize
-def iso_from_epoch(t):
+
+def epoch2iso(t):
 	return datetime2iso(epoch2datetime(t))
+
+iso_from_epoch = myvectorize(epoch2iso)
+
 	
-@myvectorize
-def iso_from_mjd(mjd):
+
+def mjd2iso(mjd):
 	return iso_from_epoch(epoch_from_mjd(mjd))
 	
+iso_from_mjd = myvectorize(mjd2iso)
+
 
 
 

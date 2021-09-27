@@ -29,9 +29,11 @@ Fast functions used as converters when importing files:
 | `datetime2iso`  | `datetime`         | ISO format ('Z' notation for UTC) |
 | `datetime2epoch`| `datetime`*        | Epoch |
 | `epoch2datetime`| Epoch              | Datetime |
+| `epoch2iso`     | Epoch              | ISO format ('Z' notation for UTC) |
+| `mjd2iso`       | MJD                | ISO format ('Z' notation for UTC) |
 
 Starred inputs, if naive are considered as system/local time.
-K+K format is always naive and interreted as sytem/local time.
+K+K format is always naive and interpreted as sytem/local time.
 
 Vectorized functions:
 | Function        | From               | To    | 
