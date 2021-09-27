@@ -73,14 +73,14 @@ def iso2epoch(s):
 
 
 def epoch2iso(t):
-	return datetime2iso(epoch2datetime(t))
+	return datetime2iso(epoch2datetime(round(t)))
 
 iso_from_epoch = myvectorize(epoch2iso)
 
 	
 
 def mjd2iso(mjd):
-	return iso_from_epoch(epoch_from_mjd(mjd))
+	return epoch2iso(epoch_from_mjd(mjd))
 	
 iso_from_mjd = myvectorize(mjd2iso)
 

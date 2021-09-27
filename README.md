@@ -4,7 +4,7 @@ A python package collecting  functions and tools to work with time intervals and
 
 ## Installation
 
-`pip3 install git+https://gitlab.ininrim.it/m.pizzocaro/tintervals.git`
+`pip3 install git+https://gitlab.ininrim.it/m.pizzocaro/tintervals.git --upgrade`
 
 ## Requirements
 
