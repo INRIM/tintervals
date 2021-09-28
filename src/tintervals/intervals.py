@@ -161,3 +161,37 @@ def csaverage(f, tistart, tistop, tostart, tostop):
 	den = ctf(tostop)-ctf(tostart)
 
 	return num/den, den
+
+
+
+def regularize(t, deltat=None):
+	"""Regularize an array fo timetags.
+
+	Parameters
+	----------
+	t : array (assumed orderer)
+		timetags
+	deltat : float, optional
+		regular time delta between timetags, by default median(diff(t))
+
+	Returns
+	-------
+	array
+		regularized array of timetags
+	
+	Example
+	-------
+	
+	>>> regularize(np.array([1,2,3,4,5,5,10,11,12,12]))                                 
+	array([ 1.,  2.,  3.,  4.,  5.,  6., 10., 11., 12., 13.])
+	
+	"""
+	if not deltat:
+		deltat = np.median(np.diff(t))
+	
+	# padding with at least 2 deltat
+	pad = np.pad(t,1, constant_values=(t[0]-2*deltat, t[-1]+2*deltat))
+	tp =  pad[:-2] + deltat
+	tm = pad[2:] - deltat
+	
+	return median(column_stack((tp, t, tm)), axis=-1)
