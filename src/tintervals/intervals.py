@@ -7,6 +7,7 @@ Functions to work with time intervals in the form of start-stop ranges.
 
 import numpy as np
 import scipy.interpolate
+import warnings
 
 def array2intervals(t, tgap=1., tblock=0.):
 	"""
@@ -195,3 +196,62 @@ def regularize(t, deltat=None):
 	tm = pad[2:] - deltat
 	
 	return np.median(np.column_stack((tp, t, tm)), axis=-1)
+
+
+def clever_floor(t, eps=0.1):
+	"""Calculate the floor of fractional timetags with noise.
+
+	Parameters
+	----------
+	t : array_like
+		input timetags
+	eps : float, optional
+		limit value, by default 0.1
+
+	Returns
+	-------
+	array
+		integer timetags
+
+	Examples
+	--------
+	>>> clever_floor(array([1.09,2.1,2.95]))                                                                                                                      
+	array([1., 2., 3.])
+
+	Notes
+	-----
+	Works best if the fractional parts are all close to zero (then it returns the round)
+	or none is (then it returns the floor).
+		Note that the choice is global:
+	>>> clever_floor(np.array([0.9, 1.9, 2.9]))
+	array([0., 1., 2.])
+
+	>>> clever_floor(np.array([0.9, 1.9, 2.95]))
+	array([1., 2., 3.])
+
+	If there are points both close to zero and close to half, it return the round only
+	for the value close to zero.
+
+
+	"""
+	t = np.asarray(t)
+	frac, integer = np.modf(t)
+
+	close_to_zero = (frac > 1-eps) | (frac < eps)
+	
+	if close_to_zero.any():
+		close_to_half = (abs(frac-0.5)<eps)
+		if close_to_half.any():
+			# complicated case -- there are number both close to zero and close to 0.5
+			# the one close to zero are rounded rather than floored
+			# here eps will matter
+			warnings.warn('Inconsistent fractional part in clever_floor.')
+			integer[close_to_zero] = np.around(t[close_to_zero])
+			return integer
+		else:
+			# there are number close to zero but not 0.5 -- return round
+			return np.around(t)
+	else:
+		# no number close to zero -- return floor
+		return integer
+
