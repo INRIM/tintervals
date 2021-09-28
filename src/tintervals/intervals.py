@@ -194,4 +194,4 @@ def regularize(t, deltat=None):
 	tp =  pad[:-2] + deltat
 	tm = pad[2:] - deltat
 	
-	return median(column_stack((tp, t, tm)), axis=-1)
+	return np.median(np.column_stack((tp, t, tm)), axis=-1)
