@@ -252,6 +252,7 @@ def clever_floor(t, eps=0.1):
 			else:
 				ret = np.around(t)
 				ret[close_to_half] = integer[close_to_half]
+				return ret
 		else:
 			# there are number close to zero but not 0.5 -- return round
 			return np.around(t)
