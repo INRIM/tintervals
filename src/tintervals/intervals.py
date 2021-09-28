@@ -229,8 +229,7 @@ def clever_floor(t, eps=0.1):
 	>>> clever_floor(np.array([0.9, 1.9, 2.95]))
 	array([1., 2., 3.])
 
-	If there are points both close to zero and close to half, it return the round only
-	for the value close to zero.
+	If there are points both close to zero and close to half, it return something mixed.
 
 
 	"""
@@ -246,8 +245,13 @@ def clever_floor(t, eps=0.1):
 			# the one close to zero are rounded rather than floored
 			# here eps will matter
 			warnings.warn('Inconsistent fractional part in clever_floor.')
-			integer[close_to_zero] = np.around(t[close_to_zero])
-			return integer
+
+			if sum(close_to_half) > sum(close_to_zero):			
+				integer[close_to_zero] = np.around(t[close_to_zero])
+				return integer
+			else:
+				ret = np.around(t)
+				ret[close_to_half] = integer[close_to_half]
 		else:
 			# there are number close to zero but not 0.5 -- return round
 			return np.around(t)
