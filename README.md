@@ -10,7 +10,6 @@ A python package collecting  functions and tools to work with time intervals and
 
 * `numpy`, `scipy`
 * `datetime`
-* `astropy`
 * `ciso8601`
 
 ## Basic usage
@@ -31,9 +30,17 @@ Fast functions used as converters when importing files:
 | `epoch2datetime`| Epoch              | Datetime |
 | `epoch2iso`     | Epoch              | ISO format ('Z' notation for UTC) |
 | `mjd2iso`       | MJD                | ISO format ('Z' notation for UTC) |
+| `epoch2mjd`     | Epoch              | MJD   |
+| `mjd2epoch`     | MJD                | Epoch |
 
-Starred inputs, if naive are considered as system/local time.
+
+Starred  inputs (*), if naive are considered as system/local time.
 K+K format is always naive and interpreted as sytem/local time.
+ISO format can be read with microseconds but it is printed without.
+Conversion from Epoch time (Unix) and MJD is done by simple affine function, 
+as both are aligned with UTC and basically ignore leap seconds.
+
+
 
 Vectorized functions:
 | Function        | From               | To    | 
@@ -64,28 +71,26 @@ Functions to manipulate array of timetags or array of start/stop intervals:
 ## Speed test
 ```
 ti.kk2iso('210922*161141.810')
-165 ns ± 0.687 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+166 ns ± 2.09 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
 ti.kk2epoch('210922*161141.810')
-691 ns ± 0.775 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+658 ns ± 1.24 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 ti.iso2datetime('20210922T161141.810Z')
-216 ns ± 2.85 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+222 ns ± 18 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 ti.iso2epoch('20210922T161141.810Z')
-477 ns ± 3.17 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+473 ns ± 5.11 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 ti.datetime2iso(datetime(2021,9,22,11,12,tzinfo=timezone.utc))
-2.6 µs ± 114 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+2.51 µs ± 9.92 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 ti.datetime2epoch(datetime(2021,9,22,11,12,tzinfo=timezone.utc))
-621 ns ± 4.96 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+613 ns ± 3.99 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 ti.epoch2datetime(1632319901)
-407 ns ± 12 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+406 ns ± 2.87 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 ti.mjd_from_epoch(1632319901)
-260 µs ± 733 ns per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+131 ns ± 0.334 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
 ti.epoch_from_mjd(59479.356)
-194 µs ± 402 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+99.4 ns ± 0.228 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
 ti.iso_from_epoch(1632319901)
-16.7 µs ± 95.8 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+19.8 µs ± 86.8 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 ti.iso_from_mjd(59479.356)
-502 µs ± 2.34 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+23 µs ± 266 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
 ```
-
-
 

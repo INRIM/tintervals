@@ -1,9 +1,7 @@
 
 from datetime import datetime, timezone
-from astropy.time import Time
-
 import numpy as np
-
+# import julian
 # fast data import from iso format
 import ciso8601 as ciso
 
@@ -58,12 +56,32 @@ def epoch2datetime(t):
 	return datetime.fromtimestamp(t, tz=timezone.utc)
 
 
-def mjd_from_epoch(epoch):
-	return Time(epoch, format='unix').to_value('mjd') 
+# MJD and unix time zero in the other scale
+# note that both are aligned with UTC and basically ignore leap seconds 
+mjd_epoch_0 = 40587.0 #julian.to_jd(epoch2datetime(0), fmt='mjd')
+epoch_mjd_0 = -3506716800.0 #datetime2epoch(julian.from_jd(0, fmt='mjd').replace(tzinfo=timezone.utc))
 
-def epoch_from_mjd(mjd):
-	return Time(mjd, format='mjd', scale='utc').to_value('unix') 
+def epoch2mjd(t):
+	return t/86400. + mjd_epoch_0
+	#return julian.to_jd(epoch2datetime(t), fmt='mjd')
+
+mjd_from_epoch = epoch2mjd
+
+def mjd2epoch(d):
+	return d*86400 + epoch_mjd_0
+	#return datetime2epoch(julian.from_jd(d, fmt='mjd').replace(tzinfo=timezone.utc))
+
+epoch_from_mjd = mjd2epoch
+
+
+
+# def mjd_from_epoch(epoch):
+# 	return Time(epoch, format='unix').to_value('mjd') 
+
+# def epoch_from_mjd(mjd):
+# 	return Time(mjd, format='mjd', scale='utc').to_value('unix') 
 	
+
 
 def kk2epoch(s, year_digits='20'):
 	return datetime2epoch(ciso.parse_datetime_as_naive(kk2iso(s, year_digits)))
