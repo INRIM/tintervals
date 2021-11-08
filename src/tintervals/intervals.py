@@ -45,6 +45,54 @@ def array2intervals(t, tgap=1., tblock=0.):
 	return out
 	
 
+def intervals2weights(a, step=1, min=None, max=None, norm=False):
+	"""
+	Given some interval start-stop return an arange of timetags and an array of weights.
+	
+	Parameters
+	----------
+	a       : 2-d array of intervals in the form (start,stop)
+	step    : float, default = 1
+			  spacing between timetags
+	min     : float, default = min of a
+	          fix the minimum of the timetags
+	max     : float, default = max of a
+	          fix the maximum of the timetags 
+	norm    : bool, default = False
+	          if True normalize the weights
+	
+	Returns
+	-------	
+	t	: array of timetags
+	w	: weights (positive only between each start,stop)
+	        
+	Example
+	-------
+		
+	"""
+	if min == None:
+		min = np.amin(a)
+
+	if max == None:
+		max = np.amax(a)	
+
+	start = np.ceil(min/step)*step
+	stop = np.floor(max/step)*step
+	
+	t = np.arange(start,stop+step,step)
+	
+
+	res = np.zeros_like(t)
+	for x in a:
+		res +=(t>x[0]) & (t<x[1])
+
+	if norm:
+		res = res/sum(res)
+
+	return t, res
+
+
+
 
 def mix(a, b):
 	"""
