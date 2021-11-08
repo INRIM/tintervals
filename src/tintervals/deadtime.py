@@ -1,5 +1,6 @@
 
-from intervals import intervals2weights
+#from intervals import intervals2weights
+from tintervals.intervals import intervals2weights
 import numpy as np
 
 
