@@ -9,6 +9,7 @@ import numpy as np
 import scipy.interpolate
 import warnings
 
+
 def array2intervals(t, tgap=1., tblock=0.):
 	"""
 	Calculate from an array of timetags t a 2-d array in the form (start,stop),
@@ -16,7 +17,7 @@ def array2intervals(t, tgap=1., tblock=0.):
 	
 	Parameters
 	----------
-	t       : 1d array of timetags
+	t       : 1d array of timetags (assumed sorted)
 	tgap    : resulting intervals will mark gaps > tgap
 	tblock  : intervals shorter than tblock will be removed
 	
@@ -31,11 +32,16 @@ def array2intervals(t, tgap=1., tblock=0.):
 	array([[1, 3],[7, 8]])
 	
 	"""
+	t = np.atleast_1d(t)
+	submask = (t[1:]-t[:-1] > tgap)
+	
+	mask = np.ones_like(t, dtype=bool)
+	mask[1:] = submask
+	tstarts = t[mask]
 
-	t2 = np.roll(t,1)
-	t3 = np.roll(t,-1)
-	tstarts = t[abs(t-t2) > tgap]
-	tstops = t[abs(t-t3) > tgap]
+	mask =  np.ones_like(t, dtype=bool)
+	mask[:-1] = submask
+	tstops = t[mask]
 
 	mask = (tstops - tstarts) >= tblock
 	tstarts = tstarts[mask]

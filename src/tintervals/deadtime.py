@@ -6,7 +6,7 @@ import numpy as np
 
 
 def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step=1., scale=1.,
-            ext_factor=10., return_dict=False, return_fft=False):
+            ext_factor=10, return_dict=False, return_fft=False):
 	"""Calculate dead time uncertainty using the Fourier transform strategy proposed in [1].
 
 	Parameters
