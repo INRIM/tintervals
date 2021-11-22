@@ -10,13 +10,13 @@ A python package collecting  functions and tools to work with time intervals and
 
 * `numpy`, `scipy`
 * `datetime`
-* `ciso8601`
+* `ciso8601` (for ISO format reading)
 
 ## Basic usage
 
 `import tintervals as ti`
 
-Functions to convert timetag formats (based on `ciso8601` and `astropy.time`).
+Functions to convert timetag formats.
 Fast functions used as converters when importing files:
 
 | Function        | From               | To    | 
@@ -54,10 +54,21 @@ Vectorized functions:
 Functions to manipulate array of timetags or array of start/stop intervals:
 | Function | Description | 
 | ------ | ------ |
-| array2intervals | convert from an array of timetags to an array of start/stop intervals |
-| mix | take the intersection of two arrays of start/stop intervals |
-| split | Subdivide an array of start/stop intervals to a fixed scale (e.g., every 10 s)|
-| csaverage | Average data given for some start/stop intervals in different start/stop intervals|
+| `array2intervals` | convert from an array of timetags to an array of start/stop intervals |
+| `intervals2weights` | convert from start/stop intervals to timetags and weights  |
+| `mix` | take the intersection of two arrays of start/stop intervals |
+| `split` | Subdivide an array of start/stop intervals to a fixed scale (e.g., every 10 s)|
+| `regvals` | retrun regular intervals between a start and stop |
+| `raverage` | Average data with timetags in regular intervals (reshape algorithm)|
+| `maverage` | Average data with timetags in given intervals (mask algorithm)|
+| `csaverage` | Average data  start/stop intervals in different start/stop intervals (cumsum algorithm)|
+
+Functions to calculate deadtime uncertainty:
+| Function | Description | 
+| ------ | ------ |
+| `deadtime.unc_fft` | calculate deadtime uncertainty from given maser noise (FFT algorithm) |
+
+
 
 
 ## License

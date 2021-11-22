@@ -7,7 +7,7 @@ Functions to work with time intervals in the form of start-stop ranges.
 
 import numpy as np
 import scipy.interpolate
-import warnings
+#import warnings
 
 
 def array2intervals(t, tgap=1., tblock=0.):
@@ -157,8 +157,180 @@ def split(a, base = 10.):
 	return np.array(res)
 
 
+def regvals(tstart, tstop, base=1., offset=0., extend=True):
+	"""Generate regular intervals between tstart and tstop, multiple of base.
 
-def csaverage(f, tistart, tistop, tostart, tostop):
+	Parameters
+	----------
+	tstart : float
+		starting time
+	tstop : float
+		stopping time
+	base : float, optional
+		base intervals (generated intervals will be mutiple of base), by default 1.
+	offset : float, optional
+		time offset in the generated intervals, by default 0.
+	extend : bool, optional
+		if True, extend the intervals to include the extremes, by default True
+
+	Returns
+	-------
+	vals
+		regular start/stop intervals
+	"""
+	if extend:
+		tstart = np.floor((tstart-offset)/base)*base + offset
+		tstop = np.ceil((tstop-offset)/base)*base + offset
+	else:
+		tstart = np.ceil((tstart-offset)/base)*base + offset
+		tstop = np.floor((tstop-offset)/base)*base + offset
+	
+	tags = np.arange(tstart, tstop+base, base)
+	return np.column_stack((tags[:-1], tags[1:]))
+
+
+
+
+def raverage(data, t, base=1., offset=0., step=None, gap_ext=10):
+	"""Average data in regular intervals.
+
+	The algorithm perform the average by reshaping data.
+	
+	Parameters
+	----------
+	data : ndarray
+		data to be averaged (along the first axis).
+	t : 1-D array
+		timetags of the data to be averaged. The length should match the first dimension of data.
+		Timetags are assumed sorted and it should be a subset of an arange with step = base
+	base : float, optional
+		base intervals (average will be at the mutiple of base, if offset=0), by default 1.
+	offset : float, optional
+		time offset for the averages (averages will be at mutiple of base + offset), by default 0.
+	step : float, optional
+		spacing between timetags, by default the median of the differences of t.
+	gap_ext : int, optional
+		algorithm will automatically skip gaps > gap_ext*base, by default 10.
+		Changing this value may change the efficiency of the algorithm dependning on the input data.
+		(Lower values will split the data more, but will have less gaps to fill.)
+
+	Returns
+	-------
+	vals
+		start/stop intervals of the averages.
+	res
+		averaged data.
+	count
+		number of averaged point for each intervals.
+
+	Notes
+	-----
+	Timetags are included in the start intervals but excluded in the stop intervals.
+
+
+	"""
+	step = step if step else np.median(np.diff(t))
+
+	if not (base/step).is_integer():
+		raise ValueError()
+	
+	N = int(base/step)
+
+	invals = array2intervals(t, tgap=gap_ext*base)
+
+	vals = []
+	res = []
+	count = []
+
+	for a, b in invals:
+		# both >=, as there is at least a big gap and I want to keep both the first and last timetag
+		mask = (t>=a) & (t<=b)
+
+
+		# b+step ccount the convention about timetag inclusion (see below)
+		outvals = regvals(a, b+step, base=base, offset=offset, extend=True)
+
+		ext_t = np.arange(outvals[0,0], outvals[-1,-1], step)
+		isin = np.isin(ext_t, t)
+
+		shape = list(data.shape)
+		shape[0] = len(ext_t)
+
+		ext_data = np.zeros(shape)
+		ext_data[isin] = data[mask]
+
+		#ext_data[:,0] = ext_t
+
+		new_shape = [N, -1] + shape[1:]
+
+		# note that this reshaping corresponds to including the start timetag but excluding the stop timetag
+		num = np.sum(ext_data.reshape(new_shape, order='F'), axis=0)
+		den = np.sum(isin.reshape((N,-1), order='F'), axis=0)
+
+		vals += [outvals[den>0]]
+		res += [(num[den>0].T/den[den>0]).T]
+		count += [den[den>0]]
+	
+	return np.concatenate(vals, axis=0), np.concatenate(res), np.concatenate(count)
+
+
+def maverage(data, t, intervals):
+	"""Average data in given intervals.
+
+	The average is done masking the data.
+
+
+	Parameters
+	----------
+	data : ndarray
+		data to be averaged (along the first axis).
+	t : 1-D array
+		timetags of the data to be averaged. The length should match the first dimension of data.
+	intervals : 2-D array
+		start/stop intervals where average the data.
+
+	Returns
+	-------
+	vals
+		start/stop intervals of the averages.
+	res
+		averaged data.
+	count
+		number of averaged point for each intervals.
+
+	Notes
+	-----
+	Timetags are included in the start intervals but excluded in the stop intervals.
+
+	"""
+	res = []
+	count = []
+	
+	intervals = np.atleast_2d(intervals)
+
+
+	for a, b in intervals:
+		mask = (t >= a) & (t < b)
+
+		num = np.sum(data[mask], axis=0)
+		den = np.sum(mask)
+
+		if den > 0:
+			res += [num/den]
+		else:
+			res += [num*0.] # garbage data, will be masked away later but I avoid a warning
+
+		count += [den]
+
+	res = np.stack(res, axis=0)
+	count= np.atleast_1d(count)
+
+	return intervals[count>0], res[count>0], count[count>0]
+
+
+
+
+def csaverage(f, ti, to, axis=0):
 	"""
 	Perform the average of data given in (tistart,tistop) ranges 
 	in the intervals (tostart, tostop).
@@ -169,10 +341,10 @@ def csaverage(f, tistart, tistop, tostart, tostop):
 	Parameters
 	----------
 	f       : input data to be averaged
-	tistart : start time for each measurement
-	tistop  : stop time for each measuremnt
-	tostart : start time for the output average
-	tostop  : stop time for the ouput average
+	ti : start/stop time for each measurement
+	to : start/stop time for the output average
+	axis : axis of interpolation. Default=0.
+	
 	
 	Returns
 	-------	
@@ -180,6 +352,9 @@ def csaverage(f, tistart, tistop, tostart, tostop):
 	num     : number of points averaged for each result
 	"""
 	
+	tistart, tistop = np.atleast_2d(ti).T
+	tostart, tostop = np.atleast_2d(to).T
+
 	# lets look for every tstart that is not a tstop
 	tiadd = np.array([t for t in tistart if t not in tistop])
 	
@@ -191,11 +366,20 @@ def csaverage(f, tistart, tistop, tostart, tostop):
 	
 	
 	# in the cumsum nothing should be added until we get to a timetag in tiadd
-	f2 = np.append(f, np.zeros(len(tiadd)))
+	# f2 = np.append(f, np.zeros(len(tiadd)))
+	# ndim version
+	f = np.atleast_1d(f)
+	npad = [(0, 0)] * f.ndim # https://stackoverflow.com/questions/19349410/how-to-pad-with-zeros-a-tensor-along-some-axis-python
+	pad_size = len(tiadd)
+	npad[axis] = (0, pad_size)
+	f2 = np.pad(f, pad_width=npad)
+
+
+
 	
 	# now I sort f2 temporarly and perform the cumsum
 	f3 = f2[t2.argsort()]
-	cs = np.cumsum(f3)
+	cs = np.cumsum(f3, axis=axis)
 	
 	# lets do the same for the number of averaged points
 	datapoints = np.ones(len(tistop))
@@ -206,8 +390,8 @@ def csaverage(f, tistart, tistop, tostart, tostop):
 	
 	
 	# interpolate linearly
-	csf = scipy.interpolate.interp1d(t3, cs, kind='linear')
-	ctf = scipy.interpolate.interp1d(t3, ct, kind='linear')
+	csf = scipy.interpolate.interp1d(t3, cs, kind='linear', axis=axis, bounds_error=False, fill_value=(cs[0],cs[-1]))
+	ctf = scipy.interpolate.interp1d(t3, ct, kind='linear', bounds_error=False, fill_value=(ct[0],ct[-1]))
 
 
 
@@ -215,7 +399,7 @@ def csaverage(f, tistart, tistop, tostart, tostop):
 	num = csf(tostop)-csf(tostart)
 	den = ctf(tostop)-ctf(tostart)
 
-	return num/den, den
+	# proper (?) broadcasting
+	res = np.moveaxis(np.moveaxis(num, axis, -1)/den, -1, axis)
 
-
-
+	return res, den
