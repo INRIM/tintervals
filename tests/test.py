@@ -49,3 +49,5 @@ for cmd in cmds:
 
 
 
+
+ti.deadtime.unc_fft([0,0.5], [0,1], wfm=1)

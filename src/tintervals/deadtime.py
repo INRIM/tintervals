@@ -68,6 +68,9 @@ def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step
 
 	"""
 
+	vals1 = np.atleast_2d(vals1)
+	vals2 = np.atleast_2d(vals2)
+
 	both  =np.concatenate((vals1,vals2))
 	start = np.amin(both)
 	stop = np.amax(both)
@@ -123,13 +126,19 @@ def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step
 		rvar += var
 		res[noise] = np.sqrt( var )
 
-	ret = [np.sqrt(rvar)]
+	
+	ret = (np.sqrt(rvar))
 	if return_dict:
-		ret += [res]
+	 	ret += (res)
 	if return_fft:
-		ret += [ft_freq, ft_sens, tot_psd]	
+	 	ret += (ft_freq, ft_sens, tot_psd)
 
-	return ret
+	if len(ret) == 1:
+		return ret[0]
+	else:
+		return ret
+
+
 
 
 
