@@ -1,0 +1,7 @@
+ciso860
+myst-parser
+numpy
+scipy
+sphinx
+sphinx-rtd-theme
+

@@ -17,16 +17,20 @@ def array2intervals(t, tgap=1., tblock=0.):
 	
 	Parameters
 	----------
-	t       : 1d array of timetags (assumed sorted)
-	tgap    : resulting intervals will mark gaps > tgap
-	tblock  : intervals shorter than tblock will be removed
+	t       : 1-d array
+		timetags (assumed sorted).
+	tgap    : float
+		resulting intervals will mark gaps > tgap, by default 1.
+	tblock  : float
+		intervals shorter than tblock will be removed, by default 0.
 	
 	Returns
 	-------	
-	out     : 2-d array of start, stop intervals
+	2-d array
+		start, stop intervals
 	
-	Example
-	-------
+	Examples
+	--------
 	
 	>>> array2intervals(np.array([1,2,3,7,8]))                                     
 	array([[1, 3],[7, 8]])
@@ -57,24 +61,24 @@ def intervals2weights(a, step=1, min=None, max=None, norm=False):
 	
 	Parameters
 	----------
-	a       : 2-d array of intervals in the form (start,stop)
-	step    : float, default = 1
-			  spacing between timetags
-	min     : float, default = min of a
-	          fix the minimum of the timetags
-	max     : float, default = max of a
-	          fix the maximum of the timetags 
-	norm    : bool, default = False
-	          if True normalize the weights
+	a       : 2-d array
+		 	  intervals in the form (start,stop).
+	step    : float
+			  spacing between timetags.
+	min     : float
+	          fix the minimum of the timetags, by default min of a.
+	max     : float
+	          fix the maximum of the timetags, by default max of a.
+	norm    : bool
+	          if True normalize the weights, by default False
 	
 	Returns
 	-------	
-	t	: array of timetags
-	w	: weights (positive only between each start,stop)
+	1-d array	
+		timetags.
+	1-d array
+		weights (positive only between each start,stop).
 	        
-	Example
-	-------
-		
 	"""
 	if min == None:
 		min = np.amin(a)
@@ -100,18 +104,26 @@ def intervals2weights(a, step=1, min=None, max=None, norm=False):
 
 
 
-def mix(a, b):
+def intersect(a, b):
 	"""
-	Intersection of two  2-d arrays in the form (start,stop),
+	Intersection of two 2-d arrays in the form (start,stop),
 	
 	Parameters
 	----------
-	a       : 2-d array of intervals in the form (start,stop)
-	b       : 2-d array of intervals in the form (start,stop)
+	a : 2-d array
+		intervals in the form (start,stop).
+	b : 2-d array
+		intervals in the form (start,stop).
 	
 	Returns
 	-------	
-	out     : intersection of a and b
+	2-d array
+		intersection of a and b
+
+	Examples
+	--------
+	>>> intersect([[1,3],[5,7]],[[2,6]])                                           
+	array([[2, 3], [5, 6]])
 
 	"""
 	res = []
@@ -132,16 +144,18 @@ def split(a, base = 10.):
 	
 	Parameters
 	----------
-	a       : 2-d array of intervals in the form (start,stop)
-	base    : float, 
-	
+	a       : 2-d array
+			intervals in the form (start,stop).
+	base    : float 
+			base interval (generated intervals will be mutiple of base).
 	Returns
 	-------	
-	out     : 2-d array of intervals in the form (start,stop),
-	        with start and stop every multiple of base
+	2-d array
+		intervals in the form (start,stop),
+	    with start and stop every multiple of base
 
-	Example
-	-------
+	Examples
+	--------
 	
 	>>> split(np.array([[1,31]]), 10)                                              
 	array([[10., 20.],[20., 30.]])
@@ -163,20 +177,20 @@ def regvals(tstart, tstop, base=1., offset=0., extend=True):
 	Parameters
 	----------
 	tstart : float
-		starting time
+		starting time.
 	tstop : float
-		stopping time
+		stopping time.
 	base : float, optional
-		base intervals (generated intervals will be mutiple of base), by default 1.
+		base interval (generated intervals will be mutiple of base), by default 1.
 	offset : float, optional
 		time offset in the generated intervals, by default 0.
 	extend : bool, optional
-		if True, extend the intervals to include the extremes, by default True
+		if True, extend the intervals to include the extremes, by default True.
 
 	Returns
 	-------
-	vals
-		regular start/stop intervals
+	2-d array
+		 regular start/stop intervals
 	"""
 	if extend:
 		tstart = np.floor((tstart-offset)/base)*base + offset
@@ -200,7 +214,7 @@ def raverage(data, t, base=1., offset=0., step=None, gap_ext=10):
 	----------
 	data : ndarray
 		data to be averaged (along the first axis).
-	t : 1-D array
+	t : 1-d array
 		timetags of the data to be averaged. The length should match the first dimension of data.
 		Timetags are assumed sorted and it should be a subset of an arange with step = base
 	base : float, optional
@@ -216,11 +230,11 @@ def raverage(data, t, base=1., offset=0., step=None, gap_ext=10):
 
 	Returns
 	-------
-	vals
+	2-d array
 		start/stop intervals of the averages.
-	res
+	ndarray
 		averaged data.
-	count
+	1-d array
 		number of averaged point for each intervals.
 
 	Notes
@@ -274,6 +288,7 @@ def raverage(data, t, base=1., offset=0., step=None, gap_ext=10):
 	return np.concatenate(vals, axis=0), np.concatenate(res), np.concatenate(count)
 
 
+
 def maverage(data, t, intervals):
 	"""Average data in given intervals.
 
@@ -284,18 +299,18 @@ def maverage(data, t, intervals):
 	----------
 	data : ndarray
 		data to be averaged (along the first axis).
-	t : 1-D array
+	t : 1-d array
 		timetags of the data to be averaged. The length should match the first dimension of data.
-	intervals : 2-D array
+	intervals : 2-d array
 		start/stop intervals where average the data.
 
 	Returns
 	-------
-	vals
+	2-d array 
 		start/stop intervals of the averages.
-	res
+	ndarray 
 		averaged data.
-	count
+	1-d array
 		number of averaged point for each intervals.
 
 	Notes
@@ -340,16 +355,22 @@ def csaverage(f, ti, to, axis=0):
 	
 	Parameters
 	----------
-	f       : input data to be averaged
-	ti : start/stop time for each measurement
-	to : start/stop time for the output average
-	axis : axis of interpolation. Default=0.
+	f  : ndarray
+		input data to be averaged.
+	ti : 2-d array
+		 start/stop time for each measurement.
+	to : 2-d array 
+		start/stop time for the output average.
+	axis : int, optional
+		axis of interpolation, by default 0.
 	
 	
 	Returns
 	-------	
-	res     : averaged array
-	num     : number of points averaged for each result
+	ndarray
+		averaged array.
+	1-d array
+		number of points averaged for each result.
 	"""
 	
 	tistart, tistop = np.atleast_2d(ti).T

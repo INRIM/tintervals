@@ -1,6 +1,7 @@
-# https://stackoverflow.com/questions/4761041/python-import-src-modules-when-running-tests
-import sys
-sys.path.insert(0, '../src') 
+# I am running a venv now!
+# # https://stackoverflow.com/questions/4761041/python-import-src-modules-when-running-tests
+# import sys
+# sys.path.insert(0, '../src') 
 
 
 import tintervals as ti

@@ -9,7 +9,6 @@ A python package collecting  functions and tools to work with time intervals and
 ## Requirements
 
 * `numpy`, `scipy`
-* `datetime`
 * `ciso8601` (for ISO format reading)
 
 ## Basic usage

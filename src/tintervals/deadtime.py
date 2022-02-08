@@ -3,11 +3,9 @@
 from tintervals.intervals import intervals2weights
 import numpy as np
 
-
-
 def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step=1., scale=1.,
             ext_factor=10, return_dict=False, return_fft=False):
-	"""Calculate dead time uncertainty using the Fourier transform strategy proposed in [1].
+	"""Calculate dead time uncertainty using the Fourier transform strategy [1].
 
 	Parameters
 	----------
@@ -41,7 +39,7 @@ def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step
 
 	Returns
 	-------
-	unc: : float
+	unc  : float
 		Dead time uncertainty between vals1 and vals2
 	par  : dict
 		Dictionary with each component of the uncertainty for 'wpm', 'fpm', 'wfm', 'ffm', 'rwfm', 'fwfm'
@@ -55,14 +53,14 @@ def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step
 	Noise type 'wpm', 'fpm', 'wfm', 'ffm', 'rwfm' corresponds to the usual power-law noise and should be given
 	as the corresponding value of the Allan deviation of the noise at 1 s. See for example [2].
 	Noise type 'fwfm' corresponds to flicker walk frequency noise and should be given
-	as the corresponding value of the Hadamar deviation of the noise at 1 s. See for example [3,4].
+	as the corresponding value of the Hadamar deviation of the noise at 1 s. See for example [3][4].
 
 	References
 	----------
-	[1] Grebing et al., Optica, 3, 563-569 (2016)
-	[2] Dawkins et al., IEEE Trans. Ultrason., Ferroelect., Freq. Cont., 54, 918-925 (2007)
-	[3] Pizzocaro et al., Nature Physics, 17, 223-227 (2021)
-	[4] Nemitz et al., Metrologia,  58, 025006 (2021)
+	.. [1] Grebing et al., Optica, 3, 563-569 (2016)
+	.. [2] Dawkins et al., IEEE Trans. Ultrason., Ferroelect., Freq. Cont., 54, 918-925 (2007)
+	.. [3] Pizzocaro et al., Nature Physics, 17, 223-227 (2021)
+	.. [4] Nemitz et al., Metrologia,  58, 025006 (2021)
 
 
 
