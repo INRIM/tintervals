@@ -1,10 +1,6 @@
 # Time conversion functions
 
 ```{eval-rst}
-.. py:currentmodule:: tintervals.conversion
-.. py:module:: tintervals.conversion
-.. autofunction:: datetime2epoch
-
-.. automodule:: tintervals
+.. automodule:: tintervals.conversion
   :members:
 ```
