@@ -1,8 +1,3 @@
-"""
-Functions to convert from different time formats.
-
-"""
-
 
 from datetime import datetime, timezone
 import numpy as np
@@ -257,7 +252,7 @@ def myvectorize(f):
 	def newfunc(*args, **kwargs):
 		return vf(*args, **kwargs)[()]
 
-	newfunc.__doc__ = """Vectorized version of tintervals.conversion.{}.
+	newfunc.__doc__ = """Vectorized version of {}.
 	""".format(f.__name__)
 	newfunc.__doc__ +=  f.__doc__.replace('str\n', 'str or ndarray\n').replace('float', 'float or ndarray')
 

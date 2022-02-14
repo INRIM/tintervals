@@ -1,8 +1,3 @@
-"""
-
-a package for handling frequency links in the ROCIT format
-
-"""
 
 import tintervals as ti
 
@@ -66,50 +61,25 @@ class Oscillator():
 class Link():
 	""" The main class for handling link data.
 
-	Attributes
+	Parameters
 	----------
-	name : str
-		Name of the link 
-	oscA : Oscillator
-		Oscillator A (denominator)
-	oscB : Oscillator
-		Oscillator B (numerator)
-	data : ndarray
-		Link data
-	t : 1-d array
-		Timetags (view of column 0 of data)
-	delta : 1-d array
-		Comparator ouput (view of column 1 of data)
-	flag : 1-d array
-		Validity flag (view of column 2 of data)
-	r0 : decimal.Decimal
-		Nominal ratio
-	sB : float
-		Scaling of the data as proposed by Lodewyck (= oscB.v0 for fractional frequencies, +/- 1 for transfer beats)
-	step : float
-		Time step of the data
+	data : ndarray, optional
+		data of the link (with columns timetags, comparator, flag), by default np.empty(0)
+	r0 : decimal.Decimal, optional
+		Nominal ratio, by default ratio of oscillator nominal frequencies (if any) or zero
+	oscA : Oscillator, optional
+		Oscillator A (denominator), by default None
+	oscB : Oscillator, optional
+		Oscillator B (numerator), by default None
+	sB : float, optional
+		Scaling factor, by default oscB nominal frequency (if any) else 1
+	name : string, optional
+		Name of the link, by default None
+	step : float, optional
+		Time step of the data, by default 1.
 	
 	"""
 	def __init__(self, data=np.empty(0), r0=None,  oscA=None, oscB=None, sB=None, name=None, step=1.):
-		"""Initialize a Link object.
-
-		Parameters
-		----------
-		data : ndarray, optional
-			data of the link (with columns timetags, comparator flag), by default np.empty(0)
-		r0 : decimal.Decimal, optional
-			Nominal ratio, by default ratio of oscilattors nominal frequencies or zero
-		oscA : Oscillator, optional
-			Oscillator A (denominator), by default None
-		oscB : Oscillator, optional
-			Oscillator B (numerator), by default None
-		sB : float, optional
-			Scaling factor, by default oscB nominal frequency (if any) else 1
-		name : string, optional
-			Name of the link, by default None
-		step : float, optional
-			Time step of the data, by default 1.
-		"""
 		if oscA:
 			self.oscA = Oscillator(oscA) if isinstance(oscA, str) else oscA
 		else:
@@ -145,9 +115,12 @@ class Link():
 		Parameters
 		----------
 		new_r0 : deciaml.Decimal, optional
-			explicit new ratio for the normalization, by default None
+			explicit new ratio for the normalization, by default None.
 			If none, the link is renormalized to the ratio of oscillators nominal frequencies (if any). 
 
+
+		Notes
+		-----
 		It requires that the nominal frequency of OscA is set, and either new_r0 or the nominal frequeny of oscB set.
 
 		"""
@@ -262,7 +235,8 @@ class Link():
 			drop point whose flag is < drop_flag, by default 0
 		timetags_as_start : bool, optional
 			If true, new timetags are the start of the averaging intervals; if false, the center, by default True
-		**kwargs : other keyword arguments passed to link_average
+		**kwargs : 
+			other keyword arguments passed to link_average
 
 		Notes
 		-----
@@ -400,7 +374,8 @@ def average(link, intervals):
 
 	Notes
 	-----
-	Based on ti.maverage.
+	Based on tintervals.maverage.
+
 	"""
 	if isinstance(intervals, str):
 		base, offset = _string_to_base(intervals)
@@ -412,6 +387,31 @@ def average(link, intervals):
 	return vals, ave, count
 
 def link_average(link, base=1., offset=0., drop_flag=0, timetags_as_start=True,  **kwargs):
+	"""Average a link in regular intervals.
+
+	Parameters
+	----------
+	link : Link
+		link object to be averaged
+	base : float, optional
+		Time base of average (average data every base seconds), by default 1.
+	offset : float, optional
+		offset in the time base (if zero, multiple of base are used), by default 0.
+	drop_flag : int or float, optional
+		drop point whose flag is < drop_flag, by default 0
+	timetags_as_start : bool, optional
+		If true, new timetags are the start of the averaging intervals; if false, the center, by default True
+
+	Returns
+	-------
+	vals
+		start/stop intervals of the averages.
+	res
+		averaged link data (all columns, so average timetag, average delta and average flag).
+	count
+		number of averaged point for each intervals.
+
+	"""
 	link.drop_invalid(drop_flag)
 
 
@@ -467,8 +467,8 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', d
 		if Link data has more than 3 columns, this can be used to specify their name, by default []
 	message : str, optional
 		message to be written in the header, by default ''
-	time_format : str, optional
-		Specify ouput time format, 'mjd', 'iso' or 'unix', by default 'mjd'
+	time_format : ['mjd', 'iso', 'unix'], optional
+		Specify ouput time format, by default 'mjd'
 	digits : int, optional
 		Number of digits for the Link delta, by default 10
 

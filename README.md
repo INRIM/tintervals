@@ -2,15 +2,17 @@
 
 A python package collecting  functions and tools to work with time intervals and to convert time data.
 
+Documentation is available at https://tintervals.readthedocs.io
+
 ## Installation
 
-The package can be installed using pip from a local folder
+The package can be installed using pip from a local folder:
 
 `pip install .`
 
-or from gitlab (INRIM only)
+or directly from github:
 
-`pip install git+https://gitlab.ininrim.it/m.pizzocaro/tintervals.git --upgrade`
+`pip install git+https://github.com/INRIM/tintervals.git`
 
 ## Requirements
 

@@ -42,6 +42,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Timetags and time intervals functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">Time conversion functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deadtime.html">Deadtime uncertainty functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocitlinks.html">Handling optical link data</a></li>
 </ul>
 
         </div>
@@ -70,12 +71,45 @@
              
   <section id="module-tintervals.intervals">
 <span id="timetags-and-time-intervals-functions"></span><h1>Timetags and time intervals functions<a class="headerlink" href="#module-tintervals.intervals" title="Permalink to this headline"></a></h1>
-<p>Functions to work with time intervals in the form of start-stop ranges.</p>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.intervals.array2intervals" title="tintervals.intervals.array2intervals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array2intervals</span></code></a>(t[, tgap, tblock])</p></td>
+<td><p>Convert from timetags to time intervals.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.intervals.intervals2weights" title="tintervals.intervals.intervals2weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intervals2weights</span></code></a>(a[, step, min, max, norm])</p></td>
+<td><p>Convert from time intervals to timetags and weights.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.intervals.intersect" title="tintervals.intervals.intersect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intersect</span></code></a>(a, b)</p></td>
+<td><p>Calculate the intersection of two arrays of time intervals.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.intervals.split" title="tintervals.intervals.split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split</span></code></a>(a[, base])</p></td>
+<td><p>Split time intervals in regular steps.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.intervals.regvals" title="tintervals.intervals.regvals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">regvals</span></code></a>(tstart, tstop[, base, offset, extend])</p></td>
+<td><p>Generate regular time intervals.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.intervals.raverage" title="tintervals.intervals.raverage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">raverage</span></code></a>(data, t[, base, offset, step, gap_ext])</p></td>
+<td><p>Average data in regular intervals.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.intervals.maverage" title="tintervals.intervals.maverage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maverage</span></code></a>(data, t, intervals)</p></td>
+<td><p>Average data in given intervals.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.intervals.csaverage" title="tintervals.intervals.csaverage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">csaverage</span></code></a>(f, ti, to[, axis])</p></td>
+<td><p>Average data in different time intervals.</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.intervals.array2intervals">
 <span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">array2intervals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tgap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tblock</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.array2intervals" title="Permalink to this definition"></a></dt>
-<dd><p>Calculate from an array of timetags t a 2-d array in the form (start,stop),
-including gaps &gt; tgap and removing intervals &lt; tblock</p>
+<dd><p>Convert from timetags to time intervals.</p>
+<p>Calculate from an array of timetags t a 2-d array in the form (start,stop),
+including gaps &gt; tgap and removing intervals &lt; tblock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -101,7 +135,8 @@ including gaps &gt; tgap and removing intervals &lt; tblock</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.intervals.intervals2weights">
 <span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">intervals2weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.intervals2weights" title="Permalink to this definition"></a></dt>
-<dd><p>Given some interval start-stop return an arange of timetags and an array of weights.</p>
+<dd><p>Convert from time intervals to timetags and weights.</p>
+<p>Given some interval start-stop return an arange of timetags and an array of weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -125,7 +160,7 @@ including gaps &gt; tgap and removing intervals &lt; tblock</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.intervals.intersect">
 <span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">intersect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.intersect" title="Permalink to this definition"></a></dt>
-<dd><p>Intersection of two 2-d arrays in the form (start,stop),</p>
+<dd><p>Calculate the intersection of two arrays of time intervals.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -150,7 +185,8 @@ including gaps &gt; tgap and removing intervals &lt; tblock</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.intervals.split">
 <span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.split" title="Permalink to this definition"></a></dt>
-<dd><p>Given some interval start-stop return all the included intervals with start and stop multiple of base</p>
+<dd><p>Split time intervals in regular steps.</p>
+<p>Given some interval start-stop return all the included intervals with start and stop multiple of base</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -176,7 +212,7 @@ with start and stop every multiple of base</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.intervals.regvals">
 <span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">regvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tstart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.regvals" title="Permalink to this definition"></a></dt>
-<dd><p>Generate regular intervals between tstart and tstop, multiple of base.</p>
+<dd><p>Generate regular time intervals.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -257,7 +293,8 @@ Changing this value may change the efficiency of the algorithm dependning on the
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.intervals.csaverage">
 <span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">csaverage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ti</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.csaverage" title="Permalink to this definition"></a></dt>
-<dd><p>Perform the average of data given in (tistart,tistop) ranges
+<dd><p>Average data in different time intervals.</p>
+<p>Perform the average of data given in (tistart,tistop) ranges
 in the intervals (tostart, tostop).
 It uses linear interpolation of the data and can work with gaps in the data.</p>
 <p>The average is made by a “cumsum” algorithm</p>

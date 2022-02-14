@@ -1,10 +1,4 @@
 
-"""
-Functions to work with time intervals in the form of start-stop ranges.
-
-"""
-
-
 import numpy as np
 import scipy.interpolate
 #import warnings
@@ -12,8 +6,10 @@ import scipy.interpolate
 
 def array2intervals(t, tgap=1., tblock=0.):
 	"""
+	Convert from timetags to time intervals.
+
 	Calculate from an array of timetags t a 2-d array in the form (start,stop),
-	including gaps > tgap and removing intervals < tblock
+	including gaps > tgap and removing intervals < tblock.
 	
 	Parameters
 	----------
@@ -57,6 +53,8 @@ def array2intervals(t, tgap=1., tblock=0.):
 
 def intervals2weights(a, step=1, min=None, max=None, norm=False):
 	"""
+	Convert from time intervals to timetags and weights.
+	
 	Given some interval start-stop return an arange of timetags and an array of weights.
 	
 	Parameters
@@ -106,8 +104,8 @@ def intervals2weights(a, step=1, min=None, max=None, norm=False):
 
 def intersect(a, b):
 	"""
-	Intersection of two 2-d arrays in the form (start,stop),
-	
+	Calculate the intersection of two arrays of time intervals.
+
 	Parameters
 	----------
 	a : 2-d array
@@ -140,6 +138,8 @@ def intersect(a, b):
 # 
 def split(a, base = 10.):
 	"""
+	Split time intervals in regular steps.
+
 	Given some interval start-stop return all the included intervals with start and stop multiple of base
 	
 	Parameters
@@ -172,7 +172,7 @@ def split(a, base = 10.):
 
 
 def regvals(tstart, tstop, base=1., offset=0., extend=True):
-	"""Generate regular intervals between tstart and tstop, multiple of base.
+	"""Generate regular time intervals.
 
 	Parameters
 	----------
@@ -347,6 +347,8 @@ def maverage(data, t, intervals):
 
 def csaverage(f, ti, to, axis=0):
 	"""
+	Average data in different time intervals.
+
 	Perform the average of data given in (tistart,tistop) ranges 
 	in the intervals (tostart, tostop).
 	It uses linear interpolation of the data and can work with gaps in the data.

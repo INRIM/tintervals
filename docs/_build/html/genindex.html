@@ -39,6 +39,7 @@
 <li class="toctree-l1"><a class="reference internal" href="intervals.html">Timetags and time intervals functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">Time conversion functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deadtime.html">Deadtime uncertainty functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocitlinks.html">Handling optical link data</a></li>
 </ul>
 
         </div>
@@ -72,13 +73,18 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
+ | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -87,10 +93,22 @@
       <li><a href="intervals.html#tintervals.intervals.array2intervals">array2intervals() (in module tintervals.intervals)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.average">average() (in module tintervals.rocitlinks)</a>
+
+      <ul>
+        <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.average">(tintervals.rocitlinks.Link method)</a>
+</li>
+      </ul></li>
+  </ul></td>
 </tr></table>
 
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.copy">copy() (tintervals.rocitlinks.Link method)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="intervals.html#tintervals.intervals.csaverage">csaverage() (in module tintervals.intervals)</a>
 </li>
@@ -102,9 +120,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="conversion.html#tintervals.conversion.datetime2epoch">datetime2epoch() (in module tintervals.conversion)</a>
 </li>
+      <li><a href="conversion.html#tintervals.conversion.datetime2iso">datetime2iso() (in module tintervals.conversion)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="conversion.html#tintervals.conversion.datetime2iso">datetime2iso() (in module tintervals.conversion)</a>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Oscillator.description">description (tintervals.rocitlinks.Oscillator attribute)</a>
+</li>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.drop_invalid">drop_invalid() (tintervals.rocitlinks.Link method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -121,6 +143,16 @@
       <li><a href="conversion.html#tintervals.conversion.epoch2mjd">epoch2mjd() (in module tintervals.conversion)</a>
 </li>
       <li><a href="conversion.html#tintervals.conversion.epoch_from_mjd">epoch_from_mjd() (in module tintervals.conversion)</a>
+</li>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.extend">extend() (tintervals.rocitlinks.Link method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Oscillator.grs_correction">grs_correction (tintervals.rocitlinks.Oscillator attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -157,6 +189,20 @@
   </ul></td>
 </tr></table>
 
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Link">Link (class in tintervals.rocitlinks)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.link_average">link_average() (in module tintervals.rocitlinks)</a>
+</li>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.load_link_from_dir">load_link_from_dir() (in module tintervals.rocitlinks)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -180,7 +226,29 @@
 </li>
         <li><a href="intervals.html#module-tintervals.intervals">tintervals.intervals</a>
 </li>
+        <li><a href="rocitlinks.html#module-tintervals.rocitlinks">tintervals.rocitlinks</a>
+</li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Oscillator.name">name (tintervals.rocitlinks.Oscillator attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.normalize">normalize() (tintervals.rocitlinks.Link method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Oscillator">Oscillator (class in tintervals.rocitlinks)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -199,7 +267,13 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.save_link_to_dir">save_link_to_dir() (in module tintervals.rocitlinks)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="intervals.html#tintervals.intervals.split">split() (in module tintervals.intervals)</a>
+</li>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Oscillator.systematic_uncertainty">systematic_uncertainty (tintervals.rocitlinks.Oscillator attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -230,6 +304,13 @@
         <li><a href="intervals.html#module-tintervals.intervals">module</a>
 </li>
       </ul></li>
+      <li>
+    tintervals.rocitlinks
+
+      <ul>
+        <li><a href="rocitlinks.html#module-tintervals.rocitlinks">module</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -237,6 +318,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deadtime.html#tintervals.deadtime.unc_fft">unc_fft() (in module tintervals.deadtime)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Oscillator.v0">v0 (tintervals.rocitlinks.Oscillator attribute)</a>
 </li>
   </ul></td>
 </tr></table>

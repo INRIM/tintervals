@@ -44,7 +44,14 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.napoleon',
     'myst_parser',
+    'autodocsumm',
 ]
+
+
+autodoc_default_options = {
+    'autosummary': True,
+}
+autodata_content = 'both'
 
 autodoc_member_order = 'bysource'
 
