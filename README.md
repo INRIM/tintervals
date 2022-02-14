@@ -4,12 +4,20 @@ A python package collecting  functions and tools to work with time intervals and
 
 ## Installation
 
-`pip3 install git+https://gitlab.ininrim.it/m.pizzocaro/tintervals.git --upgrade`
+The package can be installed using pip from a local folder
+
+`pip install .`
+
+or from gitlab (INRIM only)
+
+`pip install git+https://gitlab.ininrim.it/m.pizzocaro/tintervals.git --upgrade`
 
 ## Requirements
 
 * `numpy`, `scipy`
-* `ciso8601` (for ISO format reading)
+* `ciso8601` (for fast ISO format reading)
+* `pandas` (used for fast file loading)
+* `pyyaml`
 
 ## Basic usage
 
@@ -39,8 +47,6 @@ ISO format can be read with microseconds but it is printed without.
 Conversion from Epoch time (Unix) and MJD is done by simple affine function, 
 as both are aligned with UTC and basically ignore leap seconds.
 
-
-
 Vectorized functions:
 | Function        | From               | To    | 
 | --------------- | ------------------ | ----- |
@@ -55,7 +61,7 @@ Functions to manipulate array of timetags or array of start/stop intervals:
 | ------ | ------ |
 | `array2intervals` | convert from an array of timetags to an array of start/stop intervals |
 | `intervals2weights` | convert from start/stop intervals to timetags and weights  |
-| `mix` | take the intersection of two arrays of start/stop intervals |
+| `intersect` | take the intersection of two arrays of start/stop intervals |
 | `split` | Subdivide an array of start/stop intervals to a fixed scale (e.g., every 10 s)|
 | `regvals` | retrun regular intervals between a start and stop |
 | `raverage` | Average data with timetags in regular intervals (reshape algorithm)|
@@ -68,7 +74,10 @@ Functions to calculate deadtime uncertainty:
 | `deadtime.unc_fft` | calculate deadtime uncertainty from given maser noise (FFT algorithm) |
 
 
+## Advanced usage
+The package also provides utilities for handling optical link data developed for the [EMPIR project ROCIT](http://empir.npl.co.uk/rocit/).
 
+`import ti.rocitlinks as rl`
 
 ## License
 
@@ -76,7 +85,7 @@ Functions to calculate deadtime uncertainty:
 
 ## Authors
 
-(c) 2021 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
+(c) 2021, 2022 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
 
 ## Speed test
 ```
