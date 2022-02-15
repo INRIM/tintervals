@@ -454,6 +454,19 @@ HEADER_MESSAGE = """#
 # {}
 """
 
+def _decimal2string(d):
+	"""Format a decimal to a  human readable string."""
+	# https://stackoverflow.com/questions/11227620/drop-trailing-zeros-from-decimal/18769210#18769210
+	normalized = d.normalize()
+	sign, digits, exponent = normalized.as_tuple()
+	if exponent > 0:
+		normalized =  decimal.Decimal((sign, digits + (0,) * exponent, 0))
+	
+	out = "{:,}".format(normalized)
+	return out.replace(',', '_')
+
+
+
 def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', digits=10):
 	"""Save Link data to a directory.
 
@@ -500,26 +513,26 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', d
 	# save metadata to yaml
 	metadata = {'name': link.name}
 	if link.oscA.v0:
-		metadata['numrhoBA'] = "{}".format(link.oscA.v0*link.r0)
-		metadata['denrhoBA'] = "{}".format(link.oscA.v0)
+		metadata['numrhoBA'] = _decimal2string(link.oscA.v0*link.r0)
+		metadata['denrhoBA'] = _decimal2string(link.oscA.v0)
 	elif link.oscB.v0:
-		metadata['numrhoBA'] = "{}".format(link.oscB.v0)
-		metadata['denrhoBA'] = "{}".format(link.oscb.v0/link.r0)
+		metadata['numrhoBA'] = _decimal2string(link.oscB.v0)
+		metadata['denrhoBA'] = _decimal2string(link.oscb.v0/link.r0)
 	else:	
-		metadata['numrhoBA'] = "{}".format(link.r0)
-		metadata['denrhoBA'] = "{}".format(decimal.Decimal(1))
+		metadata['numrhoBA'] = _decimal2string(link.r0)
+		metadata['denrhoBA'] = _decimal2string(decimal.Decimal(1))
 
 	metadata['sB'] = link.sB
 
 	if link.oscA.v0:
-		metadata['nu0A'] = "{}".format(link.oscA.v0)
+		metadata['nu0A'] = _decimal2string(link.oscA.v0)
 	if link.oscA.grs_correction:
 		metadata['grsA'] = link.oscA.grs_correction
 	if link.oscA.systematic_uncertainty:
 		metadata['uA_sys'] = link.oscA.systematic_uncertainty
 		
 	if link.oscB.v0:
-		metadata['nu0B'] = "{}".format(link.oscB.v0)
+		metadata['nu0B'] = _decimal2string(link.oscB.v0)
 	if link.oscB.grs_correction:
 		metadata['grsB'] = link.oscB.grs_correction
 	if link.oscB.systematic_uncertainty:
@@ -529,7 +542,7 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', d
 		metadata['time_step'] = link.step
 
 	with open(os.path.join(sub, link.name+'.yml'), 'w') as metafile:
-		print(metadata)
+		# print(metadata)
 		#YAML().dump([metadata], metafile)
 		yaml.dump([metadata], metafile, sort_keys=False)
 
