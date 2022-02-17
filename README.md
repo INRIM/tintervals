@@ -2,6 +2,8 @@
 
 A python package collecting  functions and tools to work with time intervals and to convert time data.
 
+The package also provides utilities for handling optical link data developed for the [EMPIR project ROCIT](http://empir.npl.co.uk/rocit/).
+
 Documentation is available at https://tintervals.readthedocs.io
 
 ## Installation
@@ -77,13 +79,18 @@ Functions to calculate deadtime uncertainty:
 
 
 ## Advanced usage
-The package also provides utilities for handling optical link data developed for the [EMPIR project ROCIT](http://empir.npl.co.uk/rocit/).
+For handling optical links:
 
 `import ti.rocitlinks as rl`
 
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
+
+
+## Acknowledgments
+This work is partially funded by the European Metrology Program for Innovation and Research (EMPIR) project 18SIB05 ROCIT.
+The EMPIR initiative is cofunded by the European Union’s Horizon 2020 research and innovation programme and the EMPIR Participating States.
 
 ## Authors
 
