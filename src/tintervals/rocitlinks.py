@@ -539,7 +539,7 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', d
 		metadata['uB_sys'] = link.oscB.systematic_uncertainty
 
 	if link.step != 1:
-		metadata['time_step'] = link.step
+		metadata['interval'] = link.step
 
 	with open(os.path.join(sub, link.name+'.yml'), 'w') as metafile:
 		# print(metadata)
@@ -666,7 +666,7 @@ def load_link_from_dir(dir, meta=None, discard_invalid=True, time_format='mjd', 
 	
 	r0 = decimal.Decimal(metadata.get('numrhoBA', 1))/decimal.Decimal(metadata.get('denrhoBA', 1))
 	sB = float(metadata.get('sB', 1))
-	step = float(metadata.get('time_step', 0.))
+	step = float(metadata.get('interval', 0.))
 
 	datafiles = []
 	for e in ext:
@@ -707,6 +707,9 @@ def load_link_from_dir(dir, meta=None, discard_invalid=True, time_format='mjd', 
 			uniq, idx, count = np.unique(load[:,0], return_index=True, return_counts=True)
 			if (count>1).any():
 				load = load[idx]
+
+				if verbose:
+					print('Removing {} not unique timetags'.format(sum(count>1)))
 
 
 
