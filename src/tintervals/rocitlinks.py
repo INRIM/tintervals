@@ -462,8 +462,8 @@ def _decimal2string(d):
 	if exponent > 0:
 		normalized =  decimal.Decimal((sign, digits + (0,) * exponent, 0))
 	
-	out = "{:,}".format(normalized)
-	return out.replace(',', '_')
+	out = "{}".format(normalized)
+	return out #.replace(',', '_')
 
 
 
