@@ -4,13 +4,20 @@ A python package collecting  functions and tools to work with time intervals and
 
 The package also provides utilities for handling optical link data developed for the [EMPIR project ROCIT](http://empir.npl.co.uk/rocit/).
 
+Development is available at 
+- https://github.com/INRIM/tintervals
+- https://gitlab.ininrim.it/m.pizzocaro/tintervals (INRIM only)
+
 Documentation is available at https://tintervals.readthedocs.io
+
+Package is available at https://pypi.org/project/tintervals/
+
 
 ## Installation
 
 The package can be installed using pip from a local folder:
 
-`pip install .`
+`pip install tintervals`
 
 or directly from github:
 
@@ -52,6 +59,7 @@ Conversion from Epoch time (Unix) and MJD is done by simple affine function,
 as both are aligned with UTC and basically ignore leap seconds.
 
 Vectorized functions:
+
 | Function        | From               | To    | 
 | --------------- | ------------------ | ----- |
 | `mjd_from_epoch`| Epoch              | MJD   |
