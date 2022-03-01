@@ -246,7 +246,7 @@ def raverage(data, t, base=1., offset=0., step=None, gap_ext=10):
 	step = step if step else np.median(np.diff(t))
 
 	if not (base/step).is_integer():
-		raise ValueError()
+		raise ValueError(f'Not integer ratio between base {base} and step {step}.')
 	
 	N = int(base/step)
 

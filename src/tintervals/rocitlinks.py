@@ -55,6 +55,10 @@ class Oscillator():
 		self.description = description
 		self.grs_correction = float(grs_correction)
 		self.systematic_uncertainty = float(systematic_uncertainty)
+
+
+	def __repr__(self):
+		return str(self.__dict__)
 	
 
 
@@ -101,7 +105,17 @@ class Link():
 
 		
 
-		self.data = np.atleast_2d(data)
+		data = np.atleast_2d(data)
+
+		# get at least 3 columns
+		if data.shape[1] < 3:
+			pad_size = 3 - data.shape[1]
+			npad = [(0, 0)] * data.ndim # https://stackoverflow.com/questions/19349410/how-to-pad-with-zeros-a-tensor-along-some-axis-python
+			npad[1] = (0, pad_size)
+			data = np.pad(data, npad, constant_values=1)
+
+		self.data = data
+
 		self._set_view()
 		self.step = step if step else np.median(np.diff(self.t))
  
@@ -243,7 +257,7 @@ class Link():
 		Method base on the function link_average.
 
 		"""
-		vals, average, count = link_average(self, base=1., offset=0., drop_flag=0, timetags_as_start=True, **kwargs)
+		vals, average, count = link_average(self, base=base, offset=offset, drop_flag=drop_flag, timetags_as_start=timetags_as_start, **kwargs)
 
 
 		self.data = np.atleast_2d(average.data)
@@ -418,7 +432,7 @@ def link_average(link, base=1., offset=0., drop_flag=0, timetags_as_start=True, 
 	if isinstance(base, str):
 		base, offset = _string_to_base(base, offset)
 
-	vals, average, count = ti.raverage(link.data, link.t, base=base, offset=offset, **kwargs)
+	vals, average, count = ti.raverage(link.data, link.t, base=base, offset=offset, step=link.step, **kwargs)
 
 	# new timatags are starts
 	if timetags_as_start:
@@ -467,7 +481,7 @@ def _decimal2string(d):
 
 
 
-def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', digits=10):
+def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', yfmt='{:.10e}'):
 	"""Save Link data to a directory.
 
 	Parameters
@@ -526,16 +540,14 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', d
 
 	if link.oscA.v0:
 		metadata['nu0A'] = _decimal2string(link.oscA.v0)
-	if link.oscA.grs_correction:
+	if link.oscA.grs_correction or link.oscA.systematic_uncertainty:
 		metadata['grsA'] = link.oscA.grs_correction
-	if link.oscA.systematic_uncertainty:
 		metadata['uA_sys'] = link.oscA.systematic_uncertainty
 		
 	if link.oscB.v0:
 		metadata['nu0B'] = _decimal2string(link.oscB.v0)
-	if link.oscB.grs_correction:
+	if link.oscB.grs_correction or link.oscB.systematic_uncertainty:
 		metadata['grsB'] = link.oscB.grs_correction
-	if link.oscB.systematic_uncertainty:
 		metadata['uB_sys'] = link.oscB.systematic_uncertainty
 
 	if link.step != 1:
@@ -567,7 +579,7 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', d
 
 
 		names = ['t', 'ΔA→B', 'flag'] + extra_names 
-		yfmt = '{{:.{}e}}'.format(digits)
+		#yfmt = '{{:.{}e}}'.format(digits)
 		fmtlst = [time_format, yfmt, '{:.0f}'] + ['{}']*(link.data.shape[1]-3)
 		fmt = '\t'.join(fmtlst) + '\n'
 
@@ -581,7 +593,7 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', d
 				filo.write(fmt.format(time_converter(d[0]), *d[1:]))	
 
 
-def load_link_from_dir(dir, meta=None, discard_invalid=True, time_format='mjd', ext=['.dat','.txt'], round=True, remove_not_unique=True, verbose=False, **kwargs):
+def load_link_from_dir(dir, meta=None, start=None, stop=None, discard_invalid=True, time_format='mjd', ext=['.dat','.txt'], round=True, remove_not_unique=True, verbose=False, **kwargs):
 	"""Load link data from a directory.
 
 	Parameters
@@ -590,6 +602,10 @@ def load_link_from_dir(dir, meta=None, discard_invalid=True, time_format='mjd', 
 		Directory to be read
 	meta : str
 		yaml file with metadata, by default search for a yaml file with the same name of dir.
+	start : float
+		if given, crop the data from this point, by default None
+	stop : float
+		if given, crop the data to this point, by default None
 	discard_invalid : bool, optional
 		if True, discard data with flag=0, by default True
 	time_format : str, optional
@@ -666,7 +682,7 @@ def load_link_from_dir(dir, meta=None, discard_invalid=True, time_format='mjd', 
 	
 	r0 = decimal.Decimal(metadata.get('numrhoBA', 1))/decimal.Decimal(metadata.get('denrhoBA', 1))
 	sB = float(metadata.get('sB', 1))
-	step = float(metadata.get('interval', 0.))
+	step = float(metadata.get('interval', '0').strip('s'))
 
 	datafiles = []
 	for e in ext:
@@ -714,7 +730,60 @@ def load_link_from_dir(dir, meta=None, discard_invalid=True, time_format='mjd', 
 
 
 
-		return Link(data=load, r0=r0, sB=sB, oscA=oscA, oscB=oscB, name=name, step=step)
+		out = Link(data=load, r0=r0, sB=sB, oscA=oscA, oscB=oscB, name=name, step=step)
+		out.crop(start, stop)
+		return out
+
+
+
+def load_links_from_osc_names(link_dos, dir='.',  **kwargs):
+	"""Loads a chain of links from oscillators names.
+
+	Parameters
+	----------
+	link_dos : list of strings
+		names of the oscillators to be chained
+	dir : str, optional
+		directory to be read, by default '.'
+	**kwargs : 
+		other keyword arguments as in load_link_from_dir
+
+
+	Returns
+	-------
+	list of Link objects
+		loaded data
+
+	Notes
+	-----
+	Loads a chain of links whose names are in the form OscA-OscB.
+	For example:
+	
+	>>> load_links_from_osc_names(['A', 'B', 'C', 'D'])
+
+
+	would load directories 'B-A', 'C-B' and 'D-C' 
+	(or load and invert the links from directories 'A-B', 'B-C' and 'C-D').
+
+	"""
+	link_names = [b + '-' + a for b, a in zip(link_dos[::-1][:-1], link_dos[::-1][1:])]
+
+	links = []
+
+	for name in link_names[::-1]:
+		
+		if os.path.exists(os.path.join(dir, name)):
+			links += [load_link_from_dir(os.path.join(dir, name),  **kwargs)]
+		else:
+			parts = name.split('-')
+			invname = parts[1] + '-' + parts[0]
+			links += [-load_link_from_dir(os.path.join(dir, invname),  **kwargs)]
+	
+	return links
+
+
+
+
 
 
 if __name__ == '__main__':
