@@ -15,7 +15,7 @@ Package is available at https://pypi.org/project/tintervals/
 
 ## Installation
 
-The package can be installed using pip from a local folder:
+The package can be installed using pip:
 
 `pip install tintervals`
 
@@ -69,6 +69,7 @@ Vectorized functions:
 
 
 Functions to manipulate array of timetags or array of start/stop intervals:
+
 | Function | Description | 
 | ------ | ------ |
 | `array2intervals` | convert from an array of timetags to an array of start/stop intervals |
@@ -81,6 +82,7 @@ Functions to manipulate array of timetags or array of start/stop intervals:
 | `csaverage` | Average data  start/stop intervals in different start/stop intervals (cumsum algorithm)|
 
 Functions to calculate deadtime uncertainty:
+
 | Function | Description | 
 | ------ | ------ |
 | `deadtime.unc_fft` | calculate deadtime uncertainty from given maser noise (FFT algorithm) |
