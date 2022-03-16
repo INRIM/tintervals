@@ -286,7 +286,7 @@ class Link():
 		new_data = self.data.copy()
 		new_data[:,1]=new_fT/new_sB
 
-		return Link(oscA=self.oscB, oscB=self.oscA, data=new_data, r0=new_r0, sB = new_sB)
+		return Link(oscA=self.oscB, oscB=self.oscA, data=new_data, r0=new_r0, sB = new_sB, step=self.step)
 		
 
 	def __sub__(self, other):
@@ -320,7 +320,7 @@ def chain2(link1, link2):
 	
 	
 
-	res = Link(oscB=link2.oscB, oscA=link1.oscA, data=new_data, r0=link1.r0*link2.r0, sB=link1.r0*link2.r0*link1.oscA.v0)
+	res = Link(oscB=link2.oscB, oscA=link1.oscA, data=new_data, r0=link1.r0*link2.r0, sB=link1.r0*link2.r0*link1.oscA.v0, step=link1.step)
 	if res.oscB.v0:
 		res.normalize()
 	
@@ -553,7 +553,7 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', y
 		metadata['uB_sys'] = link.oscB.systematic_uncertainty
 
 	if link.step != 1:
-		metadata['interval'] = link.step
+		metadata['interval'] = float(link.step)
 
 	with open(os.path.join(sub, link.name+'.yml'), 'w') as metafile:
 		# print(metadata)
