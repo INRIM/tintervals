@@ -55,6 +55,15 @@ def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step
 	Noise type 'fwfm' corresponds to flicker walk frequency noise and should be given
 	as the corresponding value of the Hadamar deviation of the noise at 1 s. See for example [3][4].
 
+	Example
+	-------
+
+	>>> maser_noise = {'wfm': 4e-14, 'ffm': 3e-16}
+	>>> initial = np.array([[0,1], [2,3]])
+	>>> final = np.array([[0,5]])
+	>>> ti.deadtime.unc_fft(initial, final, **maser_noise, scale='day')
+	2.0026233736533257e-16
+
 	References
 	----------
 	.. [1] Grebing et al., Optica, 3, 563-569 (2016)

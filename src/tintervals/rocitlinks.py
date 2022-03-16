@@ -330,8 +330,10 @@ def chain2(link1, link2):
 
 
 def chain(*links):
-	# if link1.step != link2.step:
-	#  	raise ValueError('Cannot chain links with inconsitent time steps.')
+	step = links[0].step
+	for l in links:
+		if l.step != step:
+			raise ValueError('Cannot chain links with inconsitent time steps.')
 
 	if not links[0].oscA.v0:
 		raise ValueError('Cannot chain links in case the first oscillator in the chain has no nominal value (not accurate oscillator)')
@@ -355,7 +357,7 @@ def chain(*links):
 	
 	
 
-	res = Link(oscB=links[-1].oscB, oscA=links[0].oscA, data=new_data, r0=den[-1], sB=den[-1]*links[0].oscA.v0)
+	res = Link(oscB=links[-1].oscB, oscA=links[0].oscA, data=new_data, r0=den[-1], sB=den[-1]*links[0].oscA.v0, step=step)
 	if res.oscB.v0:
 		res.normalize()
 	
