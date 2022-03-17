@@ -525,6 +525,10 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', y
 	else:
 		raise ValueError("Unrecognized time_format. Valid formats are 'iso', 'mjd' and 'unix'.")
 
+	if link.step <= 1:
+		ffmt = '{:.0f}'
+	else:
+		ffmt = '{:.6f}'
 
 	# save metadata to yaml
 	metadata = {'name': link.name}
@@ -582,7 +586,7 @@ def save_link_to_dir(dir, link, extra_names=[], message='', time_format='mjd', y
 
 		names = ['t', 'ΔA→B', 'flag'] + extra_names 
 		#yfmt = '{{:.{}e}}'.format(digits)
-		fmtlst = [time_format, yfmt, '{:.0f}'] + ['{}']*(link.data.shape[1]-3)
+		fmtlst = [time_format, yfmt, ffmt] + ['{}']*(link.data.shape[1]-3)
 		fmt = '\t'.join(fmtlst) + '\n'
 
 		col_len = [len(fmtlst[0].format(time_converter(link.data[0][0])))] + [len(f.format(d)) for f, d in zip(fmtlst[1:], link.data[0,1:])]
