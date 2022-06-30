@@ -298,6 +298,25 @@ class Link():
 
 
 def chain2(link1, link2):
+	"""Chain 2 links in sequence.
+
+	Parameters
+	----------
+	link1 : link B/A
+		link object to be chained.
+	link2 : link C/B
+		link object to be chained.
+
+	Returns
+	-------
+	res 
+		chained link object C/A.
+	mask1
+		mask to be applied to link1 to select timetags common to link2
+	mask2
+		mask to be applied to link2 to select timetags common to link1
+
+	"""
 	if link1.step != link2.step:
 	 	raise ValueError('Cannot chain links with inconsitent time steps.')
 
@@ -330,6 +349,21 @@ def chain2(link1, link2):
 
 
 def chain(*links):
+	"""Chain multiple links in sequence.
+
+	Parameters
+	----------
+	*links :
+		link objects to be chained.
+	
+	Returns
+	-------
+	res 
+		chained link object.
+	masks
+		list of masks to select timetags in the common uptime (one for each link).
+
+	"""
 	step = links[0].step
 	for l in links:
 		if l.step != step:
@@ -423,7 +457,7 @@ def link_average(link, base=1., offset=0., drop_flag=0, timetags_as_start=True, 
 	vals
 		start/stop intervals of the averages.
 	res
-		averaged link data (all columns, so average timetag, average delta and average flag).
+		averaged link object.
 	count
 		number of averaged point for each intervals.
 
