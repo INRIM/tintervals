@@ -26,9 +26,15 @@ assert ti.mjd_from_epoch(ti.datetime2epoch(datetime(2021, 9, 22, 0, 0, 0, tzinfo
 
 # some timing
 
-from IPython import get_ipython
-ipython = get_ipython()
+# from IPython import get_ipython
+# ipython = get_ipython()
 
+
+import timeit
+import_module = """
+import tintervals as ti
+from datetime import datetime, timezone
+"""
 
 cmds = [
 "ti.kk2iso('210922*161141.810')",
@@ -41,14 +47,18 @@ cmds = [
 "ti.mjd_from_epoch(1632319901)",
 "ti.epoch_from_mjd(59479.356)",
 "ti.iso_from_epoch(1632319901)",
-"ti.iso_from_mjd(59479.356)"
+"ti.iso_from_mjd(59479.356)",
+"ti.kk2mjd('210922*161141.810')",
+"ti.iso2mjd('20210922T161141.810Z')",
+"ti.datetime2mjd(datetime(2021,9,22,11,12,tzinfo=timezone.utc))",
+"ti.mjd2datetime(59479.356)",
 ]
 
 for cmd in cmds:
 	print(cmd)	
-	ipython.magic("timeit " + cmd)
+	print(f'{timeit.timeit(cmd, setup=import_module)*100:.2f} ns')
 
 
 
 
-ti.deadtime.unc_fft([0,0.5], [0,1], wfm=1)
+print(ti.deadtime.unc_fft([0,5], [0,10], wfm=1))

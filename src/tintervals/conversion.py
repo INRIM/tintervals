@@ -185,21 +185,12 @@ def epoch2iso(t):
 
 	
 
-def mjd2iso(mjd):
-	"""Convert MJD to a datetime string in ISO format.
 
-	Parameters
-	----------
-	mjd : float
-		MJD.
-	
-	Returns
-	-------
-	str
-		datetime in ISO format.
-	"""
-	return epoch2iso(epoch_from_mjd(mjd))
-	
+
+
+
+
+
 
 
 # MJD and unix time zero in the other scale
@@ -242,6 +233,88 @@ def mjd2epoch(d):
 	#return datetime2epoch(julian.from_jd(d, fmt='mjd').replace(tzinfo=timezone.utc))
 
 
+
+
+def mjd2iso(mjd):
+	"""Convert MJD to a datetime string in ISO format.
+
+	Parameters
+	----------
+	mjd : float
+		MJD.
+	
+	Returns
+	-------
+	str
+		datetime in ISO format.
+	"""
+	return epoch2iso(epoch_from_mjd(mjd))
+	
+
+def iso2mjd(s):
+	"""Convert a datetime string in ISO format to MJD.
+
+	Parameters
+	----------
+	s : str
+		datetime in ISO format.
+	
+	Returns
+	-------
+	float
+		MJD.
+	"""
+	return epoch2mjd(iso2epoch(s))
+
+
+
+def datetime2mjd(d):
+	"""Convert a datetime object to seconds from the epoch.
+
+	Parameters
+	----------
+	d : datetime
+		datetime object.
+
+	Returns
+	-------
+	float
+		MJD.
+	"""
+	return epoch2mjd(datetime2epoch(d))
+
+
+def mjd2datetime(d):
+	"""Convert seconds from the epoch to a datetime object.
+
+	Parameters
+	----------
+	d : float
+		MJD.
+
+	Returns
+	-------
+	datetime
+		datetime object.
+	"""
+	return epoch2datetime(mjd2epoch(d))
+
+def kk2mjd(s, year_digits='20'):
+	"""Convert a datetime string in K+K format to MJD.
+
+	Parameters
+	----------
+	s : str
+		datetime in K+K format.
+	year_digits : str, optional
+		digits of year to be prepended to K+K format, by default '20'
+
+	Returns
+	-------
+	float
+		MJD.
+	"""
+	return datetime2mjd(ciso.parse_datetime_as_naive(kk2iso(s, year_digits)))
 
 
 
