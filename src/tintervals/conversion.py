@@ -17,7 +17,10 @@ import ciso8601 as ciso
 # MJD -> epoch     : astropy.time.Time
 
 
-
+# MJD and unix time zero in the other scale
+# note that both are aligned with UTC and basically ignore leap seconds 
+mjd_epoch_0 = 40587.0 #julian.to_jd(epoch2datetime(0), fmt='mjd')
+epoch_mjd_0 = -3506716800.0 #datetime2epoch(julian.from_jd(0, fmt='mjd').replace(tzinfo=timezone.utc))
 
 
 
@@ -182,21 +185,6 @@ def epoch2iso(t):
 	return datetime2iso(epoch2datetime(round(t)))
 
 
-
-	
-
-
-
-
-
-
-
-
-
-# MJD and unix time zero in the other scale
-# note that both are aligned with UTC and basically ignore leap seconds 
-mjd_epoch_0 = 40587.0 #julian.to_jd(epoch2datetime(0), fmt='mjd')
-epoch_mjd_0 = -3506716800.0 #datetime2epoch(julian.from_jd(0, fmt='mjd').replace(tzinfo=timezone.utc))
 
 def epoch2mjd(t):
 	"""Convert seconds from the epoch to MJD.

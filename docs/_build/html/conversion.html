@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Deadtime uncertainty functions" href="deadtime.html" />
+    <link rel="next" title="BIPM Circular T intervals" href="cirt.html" />
     <link rel="prev" title="Timetags and time intervals functions" href="intervals.html" /> 
 </head>
 
@@ -41,6 +41,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intervals.html">Timetags and time intervals functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Time conversion functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cirt.html">BIPM Circular T intervals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deadtime.html">Deadtime uncertainty functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rocitlinks.html">Handling optical link data</a></li>
 </ul>
@@ -93,7 +94,7 @@
 <td><p>ISO format</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">20210922T161141Z</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>K*K</p></td>
+<tr class="row-odd"><td><p>K+K</p></td>
 <td><p>Format used by <a class="reference external" href="http://www.kplusk-messtechnik.de/products/fxe_19.htm">K+K counters</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">210922*161141.810</span></code></p></td>
 </tr>
@@ -147,14 +148,26 @@ For a more general handling of time formats you should consider <a class="refere
 <tr class="row-even"><td><p><a class="reference internal" href="#tintervals.conversion.epoch2iso" title="tintervals.conversion.epoch2iso"><code class="xref py py-obj docutils literal notranslate"><span class="pre">epoch2iso</span></code></a>(t)</p></td>
 <td><p>Convert seconds from the epoch to a datetime string in ISO format.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.conversion.epoch2mjd" title="tintervals.conversion.epoch2mjd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">epoch2mjd</span></code></a>(t)</p></td>
+<td><p>Convert seconds from the epoch to MJD.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.conversion.mjd2epoch" title="tintervals.conversion.mjd2epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mjd2epoch</span></code></a>(d)</p></td>
+<td><p>Convert MJD to seconds from the epoch.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.conversion.mjd2iso" title="tintervals.conversion.mjd2iso"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mjd2iso</span></code></a>(mjd)</p></td>
 <td><p>Convert MJD to a datetime string in ISO format.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.conversion.epoch2mjd" title="tintervals.conversion.epoch2mjd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">epoch2mjd</span></code></a>(t)</p></td>
-<td><p>Convert seconds from the epoch to MJD.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.conversion.iso2mjd" title="tintervals.conversion.iso2mjd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iso2mjd</span></code></a>(s)</p></td>
+<td><p>Convert a datetime string in ISO format to MJD.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.conversion.mjd2epoch" title="tintervals.conversion.mjd2epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mjd2epoch</span></code></a>(d)</p></td>
-<td><p>Convert MJD to seconds from the epoch.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.conversion.datetime2mjd" title="tintervals.conversion.datetime2mjd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime2mjd</span></code></a>(d)</p></td>
+<td><p>Convert a datetime object to seconds from the epoch.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.conversion.mjd2datetime" title="tintervals.conversion.mjd2datetime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mjd2datetime</span></code></a>(d)</p></td>
+<td><p>Convert seconds from the epoch to a datetime object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.conversion.kk2mjd" title="tintervals.conversion.kk2mjd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kk2mjd</span></code></a>(s[, year_digits])</p></td>
+<td><p>Convert a datetime string in K+K format to MJD.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tintervals.conversion.mjd_from_epoch" title="tintervals.conversion.mjd_from_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mjd_from_epoch</span></code></a>(t)</p></td>
 <td><p>Same as epoch2mjd (already vectorized).</p></td>
@@ -319,23 +332,6 @@ The ouput uses ‘Z’ for UTC datetimes.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tintervals.conversion.mjd2iso">
-<span class="sig-prename descclassname"><span class="pre">tintervals.conversion.</span></span><span class="sig-name descname"><span class="pre">mjd2iso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.conversion.mjd2iso" title="Permalink to this definition"></a></dt>
-<dd><p>Convert MJD to a datetime string in ISO format.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mjd</strong> (<em>float</em>) – MJD.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>datetime in ISO format.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="tintervals.conversion.epoch2mjd">
 <span class="sig-prename descclassname"><span class="pre">tintervals.conversion.</span></span><span class="sig-name descname"><span class="pre">epoch2mjd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.conversion.epoch2mjd" title="Permalink to this definition"></a></dt>
 <dd><p>Convert seconds from the epoch to MJD.</p>
@@ -365,6 +361,94 @@ The ouput uses ‘Z’ for UTC datetimes.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float or ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.conversion.mjd2iso">
+<span class="sig-prename descclassname"><span class="pre">tintervals.conversion.</span></span><span class="sig-name descname"><span class="pre">mjd2iso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.conversion.mjd2iso" title="Permalink to this definition"></a></dt>
+<dd><p>Convert MJD to a datetime string in ISO format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mjd</strong> (<em>float</em>) – MJD.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>datetime in ISO format.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.conversion.iso2mjd">
+<span class="sig-prename descclassname"><span class="pre">tintervals.conversion.</span></span><span class="sig-name descname"><span class="pre">iso2mjd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.conversion.iso2mjd" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a datetime string in ISO format to MJD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – datetime in ISO format.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>MJD.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.conversion.datetime2mjd">
+<span class="sig-prename descclassname"><span class="pre">tintervals.conversion.</span></span><span class="sig-name descname"><span class="pre">datetime2mjd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.conversion.datetime2mjd" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a datetime object to seconds from the epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>d</strong> (<em>datetime</em>) – datetime object.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>MJD.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.conversion.mjd2datetime">
+<span class="sig-prename descclassname"><span class="pre">tintervals.conversion.</span></span><span class="sig-name descname"><span class="pre">mjd2datetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.conversion.mjd2datetime" title="Permalink to this definition"></a></dt>
+<dd><p>Convert seconds from the epoch to a datetime object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>d</strong> (<em>float</em>) – MJD.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>datetime object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.conversion.kk2mjd">
+<span class="sig-prename descclassname"><span class="pre">tintervals.conversion.</span></span><span class="sig-name descname"><span class="pre">kk2mjd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year_digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'20'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.conversion.kk2mjd" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a datetime string in K+K format to MJD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>str</em>) – datetime in K+K format.</p></li>
+<li><p><strong>year_digits</strong> (<em>str</em><em>, </em><em>optional</em>) – digits of year to be prepended to K+K format, by default ‘20’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>MJD.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -424,7 +508,7 @@ Convert MJD to a datetime string in ISO format.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="intervals.html" class="btn btn-neutral float-left" title="Timetags and time intervals functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="deadtime.html" class="btn btn-neutral float-right" title="Deadtime uncertainty functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cirt.html" class="btn btn-neutral float-right" title="BIPM Circular T intervals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

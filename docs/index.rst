@@ -8,5 +8,6 @@ Welcome to tintervals's documentation!
 
    intervals
    conversion
+   cirt
    deadtime
    rocitlinks

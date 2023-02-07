@@ -15,7 +15,7 @@ The package can handle data in fractional frequency or transfer beat notation ba
     link2 = rl.load_link_from_dir('./Data/Link2', meta='metadata.yml')
 
     # chaining link
-    reslink = rl.chain(link1, link2)
+    reslink, masks = rl.chain(link1, link2)
 
     # averaging links
     days, daylink, dcount = rl.link_average(reslink, 'day')

@@ -38,6 +38,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="intervals.html">Timetags and time intervals functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">Time conversion functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cirt.html">BIPM Circular T intervals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deadtime.html">Deadtime uncertainty functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rocitlinks.html">Handling optical link data</a></li>
 </ul>
@@ -106,10 +107,18 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.copy">copy() (tintervals.rocitlinks.Link method)</a>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.chain">chain() (in module tintervals.rocitlinks)</a>
+</li>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.chain2">chain2() (in module tintervals.rocitlinks)</a>
+</li>
+      <li><a href="cirt.html#tintervals.cirt.cirtt2mjd">cirtt2mjd() (in module tintervals.cirt)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="cirt.html#tintervals.cirt.cirtvals">cirtvals() (in module tintervals.cirt)</a>
+</li>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.copy">copy() (tintervals.rocitlinks.Link method)</a>
+</li>
       <li><a href="intervals.html#tintervals.intervals.csaverage">csaverage() (in module tintervals.intervals)</a>
 </li>
   </ul></td>
@@ -124,6 +133,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="conversion.html#tintervals.conversion.datetime2mjd">datetime2mjd() (in module tintervals.conversion)</a>
+</li>
       <li><a href="rocitlinks.html#tintervals.rocitlinks.Oscillator.description">description (tintervals.rocitlinks.Oscillator attribute)</a>
 </li>
       <li><a href="rocitlinks.html#tintervals.rocitlinks.Link.drop_invalid">drop_invalid() (tintervals.rocitlinks.Link method)</a>
@@ -170,6 +181,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="conversion.html#tintervals.conversion.iso2epoch">iso2epoch() (in module tintervals.conversion)</a>
 </li>
+      <li><a href="conversion.html#tintervals.conversion.iso2mjd">iso2mjd() (in module tintervals.conversion)</a>
+</li>
       <li><a href="conversion.html#tintervals.conversion.iso_from_epoch">iso_from_epoch() (in module tintervals.conversion)</a>
 </li>
       <li><a href="conversion.html#tintervals.conversion.iso_from_mjd">iso_from_mjd() (in module tintervals.conversion)</a>
@@ -186,6 +199,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="conversion.html#tintervals.conversion.kk2iso">kk2iso() (in module tintervals.conversion)</a>
 </li>
+      <li><a href="conversion.html#tintervals.conversion.kk2mjd">kk2mjd() (in module tintervals.conversion)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -194,11 +209,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="rocitlinks.html#tintervals.rocitlinks.Link">Link (class in tintervals.rocitlinks)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="rocitlinks.html#tintervals.rocitlinks.link_average">link_average() (in module tintervals.rocitlinks)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="rocitlinks.html#tintervals.rocitlinks.load_link_from_dir">load_link_from_dir() (in module tintervals.rocitlinks)</a>
+</li>
+      <li><a href="rocitlinks.html#tintervals.rocitlinks.load_links_from_osc_names">load_links_from_osc_names() (in module tintervals.rocitlinks)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -207,6 +224,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="intervals.html#tintervals.intervals.maverage">maverage() (in module tintervals.intervals)</a>
+</li>
+      <li><a href="cirt.html#tintervals.cirt.mjd2cirt">mjd2cirt() (in module tintervals.cirt)</a>
+</li>
+      <li><a href="conversion.html#tintervals.conversion.mjd2datetime">mjd2datetime() (in module tintervals.conversion)</a>
 </li>
       <li><a href="conversion.html#tintervals.conversion.mjd2epoch">mjd2epoch() (in module tintervals.conversion)</a>
 </li>
@@ -220,6 +241,8 @@
     module
 
       <ul>
+        <li><a href="cirt.html#module-tintervals.cirt">tintervals.cirt</a>
+</li>
         <li><a href="conversion.html#module-tintervals.conversion">tintervals.conversion</a>
 </li>
         <li><a href="deadtime.html#module-tintervals.deadtime">tintervals.deadtime</a>
@@ -281,6 +304,13 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    tintervals.cirt
+
+      <ul>
+        <li><a href="cirt.html#module-tintervals.cirt">module</a>
+</li>
+      </ul></li>
       <li>
     tintervals.conversion
 

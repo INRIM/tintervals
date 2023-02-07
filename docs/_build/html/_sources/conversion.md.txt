@@ -9,7 +9,7 @@ Supported formats are:
 | Epoch (Unix) | Seconds from the Unix epoch | `time.time()` |
 | MJD          | Modified Julian Date        | `59604.3`     |
 | ISO          | ISO format                  | `20210922T161141Z` |
-| K*K          | Format used by [K+K counters](http://www.kplusk-messtechnik.de/products/fxe_19.htm) | `210922*161141.810`|
+| K+K          | Format used by [K+K counters](http://www.kplusk-messtechnik.de/products/fxe_19.htm) | `210922*161141.810`|
 |              | (either with `*` or space)  |  |
 | datetime     | Python datetime object      | |
 

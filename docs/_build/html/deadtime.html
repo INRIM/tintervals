@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deadtime uncertainty functions &mdash; tintervals 0.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -69,7 +68,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-tintervals.deadtime">
+  <div class="section" id="module-tintervals.deadtime">
 <span id="deadtime-uncertainty-functions"></span><h1>Deadtime uncertainty functions<a class="headerlink" href="#module-tintervals.deadtime" title="Permalink to this headline"></a></h1>
 <p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
@@ -122,6 +121,14 @@ Only provided if <cite>return_fft</cite> is True.</p></li>
 as the corresponding value of the Allan deviation of the noise at 1 s. See for example [2].
 Noise type ‘fwfm’ corresponds to flicker walk frequency noise and should be given
 as the corresponding value of the Hadamar deviation of the noise at 1 s. See for example [3][4].</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">maser_noise</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;wfm&#39;</span><span class="p">:</span> <span class="mf">4e-14</span><span class="p">,</span> <span class="s1">&#39;ffm&#39;</span><span class="p">:</span> <span class="mf">3e-16</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ti</span><span class="o">.</span><span class="n">deadtime</span><span class="o">.</span><span class="n">unc_fft</span><span class="p">(</span><span class="n">initial</span><span class="p">,</span> <span class="n">final</span><span class="p">,</span> <span class="o">**</span><span class="n">maser_noise</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">)</span>
+<span class="go">2.0026233736533257e-16</span>
+</pre></div>
+</div>
 <p class="rubric">References</p>
 <dl class="footnote brackets">
 <dt class="label" id="id1"><span class="brackets">1</span></dt>
@@ -139,7 +146,7 @@ as the corresponding value of the Hadamar deviation of the noise at 1 s. See for
 </dl>
 </dd></dl>
 
-</section>
+</div>
 
 
            </div>

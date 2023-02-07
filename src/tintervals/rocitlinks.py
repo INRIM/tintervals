@@ -147,7 +147,7 @@ class Link():
 		elif self.oscB.v0:
 			new_r0 = self.oscB.v0/self.oscA.v0
 		else:
-	 		raise ValueError('Cannot normalize link without explicit or implicit nominal ratio r0.')
+			raise ValueError('Cannot normalize link without explicit or implicit nominal ratio r0.')
 
 		new_sB = float(self.oscB.v0)
 

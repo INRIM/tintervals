@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIPM Circular T intervals &mdash; tintervals 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Deadtime uncertainty functions" href="deadtime.html" />
+    <link rel="prev" title="Time conversion functions" href="conversion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> tintervals
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intervals.html">Timetags and time intervals functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conversion.html">Time conversion functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">BIPM Circular T intervals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deadtime.html">Deadtime uncertainty functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocitlinks.html">Handling optical link data</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tintervals</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>BIPM Circular T intervals</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cirt.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-tintervals.cirt">
+<span id="bipm-circular-t-intervals"></span><h1>BIPM Circular T intervals<a class="headerlink" href="#module-tintervals.cirt" title="Permalink to this headline"></a></h1>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.cirt.cirtt2mjd" title="tintervals.cirt.cirtt2mjd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cirtt2mjd</span></code></a>(year, month)</p></td>
+<td><p>Convert the BIPM Circular T year-month in MJD start-stop.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.cirt.mjd2cirt" title="tintervals.cirt.mjd2cirt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mjd2cirt</span></code></a>(mjd)</p></td>
+<td><p>Return the Circular T (year/month) corresponding to the given MJD.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.cirt.cirtvals" title="tintervals.cirt.cirtvals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cirtvals</span></code></a>(start[, stop])</p></td>
+<td><p>Calculate MJD intervals corresponding to the BIPM Circular Ts between start and stop.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.cirt.cirtt2mjd">
+<span class="sig-prename descclassname"><span class="pre">tintervals.cirt.</span></span><span class="sig-name descname"><span class="pre">cirtt2mjd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.cirt.cirtt2mjd" title="Permalink to this definition"></a></dt>
+<dd><p>Convert the BIPM Circular T year-month in MJD start-stop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>year</strong> (<em>int</em>) – Circular-T year</p></li>
+<li><p><strong>month</strong> (<em>int</em>) – Circular-T month</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Circular-T start and stop as MJD</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>1d array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.cirt.mjd2cirt">
+<span class="sig-prename descclassname"><span class="pre">tintervals.cirt.</span></span><span class="sig-name descname"><span class="pre">mjd2cirt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.cirt.mjd2cirt" title="Permalink to this definition"></a></dt>
+<dd><p>Return the Circular T (year/month) corresponding to the given MJD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mjd</strong> (<em>float</em>) – MJD date</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>corresponding Circular-T containing the MJD.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>year, month</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.cirt.cirtvals">
+<span class="sig-prename descclassname"><span class="pre">tintervals.cirt.</span></span><span class="sig-name descname"><span class="pre">cirtvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.cirt.cirtvals" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate MJD intervals corresponding to the BIPM Circular Ts between start and stop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>float</em><em> or </em><em>datetime</em>) – starting MJD or date</p></li>
+<li><p><strong>stop</strong> (<em>float</em><em> or </em><em>datetime</em><em>, </em><em>optional</em>) – stop MJD or date, by default (present day).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>start, stop intervals in MJD for each Circular T</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>2d array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="conversion.html" class="btn btn-neutral float-left" title="Time conversion functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="deadtime.html" class="btn btn-neutral float-right" title="Deadtime uncertainty functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Marco Pizzocaro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

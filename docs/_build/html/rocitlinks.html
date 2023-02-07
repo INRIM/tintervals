@@ -40,6 +40,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intervals.html">Timetags and time intervals functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">Time conversion functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cirt.html">BIPM Circular T intervals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deadtime.html">Deadtime uncertainty functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Handling optical link data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic usage</a></li>
@@ -86,7 +87,7 @@ link1 = rl.load_link_from_dir(&#39;./Data/Link1&#39;, meta=&#39;metadata.yml&#39
 link2 = rl.load_link_from_dir(&#39;./Data/Link2&#39;, meta=&#39;metadata.yml&#39;)
 
 # chaining link
-reslink = rl.chain(link1, link2)
+reslink, masks = rl.chain(link1, link2)
 
 # averaging links
 days, daylink, dcount = rl.link_average(reslink, &#39;day&#39;)
@@ -120,6 +121,12 @@ rl.save_link_to_dir(&#39;./Output&#39;, daylink)
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.rocitlinks.chain2" title="tintervals.rocitlinks.chain2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">chain2</span></code></a>(link1, link2)</p></td>
+<td><p>Chain 2 links in sequence.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.rocitlinks.chain" title="tintervals.rocitlinks.chain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">chain</span></code></a>(*links)</p></td>
+<td><p>Chain multiple links in sequence.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.rocitlinks.average" title="tintervals.rocitlinks.average"><code class="xref py py-obj docutils literal notranslate"><span class="pre">average</span></code></a>(link, intervals)</p></td>
 <td><p>Average a link in given intervals</p></td>
 </tr>
@@ -129,8 +136,11 @@ rl.save_link_to_dir(&#39;./Output&#39;, daylink)
 <tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.rocitlinks.save_link_to_dir" title="tintervals.rocitlinks.save_link_to_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_link_to_dir</span></code></a>(dir, link[, extra_names, ...])</p></td>
 <td><p>Save Link data to a directory.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.rocitlinks.load_link_from_dir" title="tintervals.rocitlinks.load_link_from_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_link_from_dir</span></code></a>(dir[, meta, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.rocitlinks.load_link_from_dir" title="tintervals.rocitlinks.load_link_from_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_link_from_dir</span></code></a>(dir[, meta, start, stop, ...])</p></td>
 <td><p>Load link data from a directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.rocitlinks.load_links_from_osc_names" title="tintervals.rocitlinks.load_links_from_osc_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_links_from_osc_names</span></code></a>(link_dos[, dir])</p></td>
+<td><p>Loads a chain of links from oscillators names.</p></td>
 </tr>
 </tbody>
 </table>
@@ -307,6 +317,46 @@ If none, the link is renormalized to the ratio of oscillators nominal frequencie
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="tintervals.rocitlinks.chain2">
+<span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">chain2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.chain2" title="Permalink to this definition"></a></dt>
+<dd><p>Chain 2 links in sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link1</strong> (<em>link B/A</em>) – link object to be chained.</p></li>
+<li><p><strong>link2</strong> (<em>link C/B</em>) – link object to be chained.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>res</em> – chained link object C/A.</p></li>
+<li><p><em>mask1</em> – mask to be applied to link1 to select timetags common to link2</p></li>
+<li><p><em>mask2</em> – mask to be applied to link2 to select timetags common to link1</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.rocitlinks.chain">
+<span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">links</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.chain" title="Permalink to this definition"></a></dt>
+<dd><p>Chain multiple links in sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>*links</strong> – link objects to be chained.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>res</em> – chained link object.</p></li>
+<li><p><em>masks</em> – list of masks to select timetags in the common uptime (one for each link).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tintervals.rocitlinks.average">
 <span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intervals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.average" title="Permalink to this definition"></a></dt>
 <dd><p>Average a link in given intervals</p>
@@ -348,7 +398,7 @@ Or a 2d-array of start-stop intervals.</p></li>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><em>vals</em> – start/stop intervals of the averages.</p></li>
-<li><p><em>res</em> – averaged link data (all columns, so average timetag, average delta and average flag).</p></li>
+<li><p><em>res</em> – averaged link object.</p></li>
 <li><p><em>count</em> – number of averaged point for each intervals.</p></li>
 </ul>
 </p>
@@ -358,7 +408,7 @@ Or a 2d-array of start-stop intervals.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.rocitlinks.save_link_to_dir">
-<span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">save_link_to_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mjd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.save_link_to_dir" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">save_link_to_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mjd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'{:.10e}'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.save_link_to_dir" title="Permalink to this definition"></a></dt>
 <dd><p>Save Link data to a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -379,13 +429,15 @@ Link metadata is saved in a yaml file in the directory.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.rocitlinks.load_link_from_dir">
-<span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">load_link_from_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_invalid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mjd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['.dat',</span> <span class="pre">'.txt']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_not_unique</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.load_link_from_dir" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">load_link_from_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_invalid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mjd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['.dat',</span> <span class="pre">'.txt']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_not_unique</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.load_link_from_dir" title="Permalink to this definition"></a></dt>
 <dd><p>Load link data from a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dir</strong> (<em>str</em>) – Directory to be read</p></li>
 <li><p><strong>meta</strong> (<em>str</em>) – yaml file with metadata, by default search for a yaml file with the same name of dir.</p></li>
+<li><p><strong>start</strong> (<em>float</em>) – if given, crop the data from this point, by default None</p></li>
+<li><p><strong>stop</strong> (<em>float</em>) – if given, crop the data to this point, by default None</p></li>
 <li><p><strong>discard_invalid</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, discard data with flag=0, by default True</p></li>
 <li><p><strong>time_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify input time format, ‘mjd’, ‘iso’ or ‘unix’, by default ‘mjd’</p></li>
 <li><p><strong>ext</strong> (<em>list</em><em> or </em><em>string</em><em>, </em><em>optional</em>) – extension of the file to read, by default [‘.dat’,’.txt’]</p></li>
@@ -402,6 +454,35 @@ Link metadata is saved in a yaml file in the directory.</p>
 <dd class="field-odd"><p><a class="reference internal" href="#tintervals.rocitlinks.Link" title="tintervals.rocitlinks.Link">Link</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.rocitlinks.load_links_from_osc_names">
+<span class="sig-prename descclassname"><span class="pre">tintervals.rocitlinks.</span></span><span class="sig-name descname"><span class="pre">load_links_from_osc_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link_dos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.rocitlinks.load_links_from_osc_names" title="Permalink to this definition"></a></dt>
+<dd><p>Loads a chain of links from oscillators names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link_dos</strong> (<em>list of strings</em>) – names of the oscillators to be chained</p></li>
+<li><p><strong>dir</strong> (<em>str</em><em>, </em><em>optional</em>) – directory to be read, by default ‘.’</p></li>
+<li><p><strong>**kwargs</strong> – other keyword arguments as in load_link_from_dir</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>loaded data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of Link objects</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Loads a chain of links whose names are in the form OscA-OscB.
+For example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">load_links_from_osc_names</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>would load directories ‘B-A’, ‘C-B’ and ‘D-C’
+(or load and invert the links from directories ‘A-B’, ‘B-C’ and ‘C-D’).</p>
 </dd></dl>
 
 </section>
