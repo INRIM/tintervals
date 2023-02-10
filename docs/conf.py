@@ -20,13 +20,13 @@ sys.path.insert(0, os.path.abspath('../src'))
 # -- Project information -----------------------------------------------------
 
 project = 'tintervals'
-copyright = '2022, Marco Pizzocaro'
+copyright = '2022, 2023 Marco Pizzocaro'
 author = 'Marco Pizzocaro'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = '0.1.4'
 
 
 # -- General configuration ---------------------------------------------------
