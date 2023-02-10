@@ -4,7 +4,7 @@ import tintervals as ti
 import numpy as np
 
 
-def cirtt2mjd(year, month):
+def cirt2mjd(year, month):
 	""" Convert the BIPM Circular T year-month in MJD start-stop.
 
 	Parameters
