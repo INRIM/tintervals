@@ -45,7 +45,7 @@ def mjd2cirt(mjd):
 		corresponding Circular-T containing the MJD.
 	"""
 	mod = (mjd + 1)%5
-	dt = ti.mjd2datetime(mjd -mod + 4).replace(day=1)
+	dt = ti.mjd2datetime(mjd -mod + 5).replace(day=1)
 	return dt.year, dt.month
 
 def cirtvals(start, stop=None):
