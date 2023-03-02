@@ -20,9 +20,12 @@ def cirt2mjd(year, month):
 		Circular-T start and stop as MJD
 	"""
 	# year + month -> circular T
-	s = datetime(year, month, 1)
-	e = s + relativedelta.relativedelta(months=1)
+	x = datetime(year, month, 1, tzinfo=timezone.utc) 
+	s = x + relativedelta.relativedelta(days=-1)
+	e = x + relativedelta.relativedelta(months=1) + relativedelta.relativedelta(days=-1)
 	
+
+
 	s_mjd = ti.epoch2mjd(ti.datetime2epoch(s))
 	e_mjd = ti.epoch2mjd(ti.datetime2epoch(e))
 
@@ -117,7 +120,8 @@ def cirtvals(start, stop=None):
 
 	# # convert each 1st of month to start of circularT
 	# # timezone.utc assure proper conversion at integer mjds
-	s_mjd = np.array([ti.epoch2mjd(ti.datetime2epoch(s.replace(tzinfo=timezone.utc))) for s in months])
+	s_mjd = np.array([ti.epoch2mjd(ti.datetime2epoch(s.replace(tzinfo=timezone.utc))) for s in months])  # first of every month
+	s_mjd -= 1  # last of every month
 	s_mod = (s_mjd + 1)%5	
 
 	breaks = s_mjd-s_mod
