@@ -426,3 +426,87 @@ def csaverage(f, ti, to, axis=0):
 	res = np.moveaxis(np.moveaxis(num, axis, -1)/den, -1, axis)
 
 	return res, den
+
+
+
+def add_break(vals, brk):
+	"""Add a break to given start-stop intervals.
+
+	Parameters
+	----------
+	vals : 2d array
+		Start/stop intervals
+	brk : float
+		Break to be inserted.
+
+	Returns
+	-------
+	2d array
+		New intervals with added break.
+
+	Examples
+	--------
+
+	>>> vals = np.array([[0,1],[1,2],[2,3]])                                    
+	>>> add_break(vals, 1.5)                                                    
+	array([[0. , 1. ],
+		   [1. , 1.5],
+		   [1.5, 2. ],
+		   [2. , 3. ]])
+
+
+	"""
+	out = []
+	for start,stop in vals:
+		if (brk > start) and (brk < stop):
+			out += [[start, brk],
+			[brk, stop]]
+		else:
+			out += [[start, stop]]
+	return np.atleast_2d(out)
+
+def remove_break(vals, brk):
+	"""Remove a break from given start/stop intervals.
+
+	Parameters
+	----------
+	vals : 2d array
+		Start/stop intervals
+	brk : float
+		Break to be removed
+
+	Returns
+	-------
+	2d array
+		New intervals with break removed.
+
+	Returns
+	-------
+	2d array
+		New intervals with added break.
+
+	Examples
+	--------
+
+	>>> vals = np.array([[0,1],[1,2],[2,3]])                                    
+	>>> remove_break(vals, 2)                                                    
+	array([[0. , 1. ],
+		   [1. , 3. ]])
+
+	"""
+	out = []
+	begin = vals[0,0]
+	end = vals[-1,-1]
+	gaps = np.column_stack((vals[:-1,1], vals[1:,0]))
+	
+	for start,stop in gaps:
+		if (brk >= start) and (brk <= stop):
+			pass
+		else:
+			out += [[start,stop]]
+	
+	out = np.atleast_2d(out)
+	stops = np.append(out[:,0], end)
+	starts = np.append(begin, out[:,1])
+
+	return np.atleast_2d(np.column_stack((starts,stops)))
