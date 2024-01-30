@@ -2,7 +2,7 @@
 
 A python package collecting  functions and tools to work with time intervals and to convert time data.
 
-The package also provides utilities for handling optical link data developed for the [EMPIR project ROCIT](http://empir.npl.co.uk/rocit/).
+The package also provides utilities for handling optical link data developed for the [EMPIR project ROCIT](http://empir.npl.co.uk/rocit/) and for the [European Partnership on Metrology Project TOCK](https://www.ptb.de/epm2022/tock/home)..
 
 Development is available at 
 - https://github.com/INRIM/tintervals
@@ -27,7 +27,7 @@ or directly from github:
 
 * `numpy`, `scipy`
 * `ciso8601` (for fast ISO format reading)
-* `pandas` (used for fast file loading)
+* `pandas` (used only for fast file loading)
 * `pyyaml`
 
 ## Basic usage
@@ -93,6 +93,8 @@ For handling optical links:
 
 `import ti.rocitlinks as rl`
 
+See the docs for more details.
+
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
@@ -102,9 +104,13 @@ For handling optical links:
 This work is partially funded by the European Metrology Program for Innovation and Research (EMPIR) project 18SIB05 ROCIT.
 The EMPIR initiative is cofunded by the European Union’s Horizon 2020 research and innovation programme and the EMPIR Participating States.
 
+This work has received funding from the European Partnership on Metrology, co-financed by the European Union’s Horizon Europe Research and Innovation Programme and by the Participating States, under grant number 22IEM01 TOCK.
+
+![badge](./Acknowledgement%20badge.png)
+
 ## Authors
 
-(c) 2021, 2022 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
+(c) 2021-2024 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
 
 ## Speed test
 ```
