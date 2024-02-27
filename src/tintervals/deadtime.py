@@ -136,7 +136,7 @@ def unc_fft(vals1, vals2, wpm=0., fpm=0., wfm=0., ffm=0., rwfm=0., fwfm=0., step
 	
 	ret = (np.sqrt(rvar), )
 	if return_dict:
-		ret += (res)
+		ret += (res,)
 	if return_fft:
 		ret += (ft_freq, ft_sens, tot_psd)
 
