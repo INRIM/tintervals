@@ -110,7 +110,7 @@ This work has received funding from the European Partnership on Metrology, co-fi
 
 ## Authors
 
-(c) 2021-2024 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
+(c) 2021-2025 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
 
 ## Speed test
 ```

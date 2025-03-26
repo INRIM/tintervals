@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deadtime uncertainty functions &mdash; tintervals 0.1.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Deadtime uncertainty functions &mdash; tintervals 0.2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Handling optical link data" href="rocitlinks.html" />
-    <link rel="prev" title="Time conversion functions" href="conversion.html" /> 
+    <link rel="prev" title="BIPM Circular T intervals" href="cirt.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -26,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> tintervals
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tintervals
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -40,7 +48,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intervals.html">Timetags and time intervals functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">Time conversion functions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Deadtime uncertainty functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cirt.html">BIPM Circular T intervals</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Deadtime uncertainty functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tintervals.deadtime.unc_fft"><code class="docutils literal notranslate"><span class="pre">unc_fft()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tintervals.deadtime.masercov_fft"><code class="docutils literal notranslate"><span class="pre">masercov_fft()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tintervals.deadtime.cov_fft"><code class="docutils literal notranslate"><span class="pre">cov_fft()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="rocitlinks.html">Handling optical link data</a></li>
 </ul>
 
@@ -57,8 +71,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Deadtime uncertainty functions</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Deadtime uncertainty functions</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/deadtime.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -68,26 +82,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-tintervals.deadtime">
-<span id="deadtime-uncertainty-functions"></span><h1>Deadtime uncertainty functions<a class="headerlink" href="#module-tintervals.deadtime" title="Permalink to this headline"></a></h1>
+  <section id="module-tintervals.deadtime">
+<span id="deadtime-uncertainty-functions"></span><h1>Deadtime uncertainty functions<a class="headerlink" href="#module-tintervals.deadtime" title="Link to this heading"></a></h1>
 <p><strong>Functions:</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.deadtime.unc_fft" title="tintervals.deadtime.unc_fft"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unc_fft</span></code></a>(vals1, vals2[, wpm, fpm, wfm, ffm, ...])</p></td>
 <td><p>Calculate dead time uncertainty using the Fourier transform strategy [1].</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.deadtime.masercov_fft" title="tintervals.deadtime.masercov_fft"><code class="xref py py-obj docutils literal notranslate"><span class="pre">masercov_fft</span></code></a>(vals[, wpm, fpm, wfm, ffm, ...])</p></td>
+<td><p>Calculate covariance between intervals sampling the same maser noise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.deadtime.cov_fft" title="tintervals.deadtime.cov_fft"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cov_fft</span></code></a>(vals1, vals2[, wpm, fpm, wfm, ffm, ...])</p></td>
+<td><p>Calculate covariance for pairs of intervals sampling the same maser noise.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="tintervals.deadtime.unc_fft">
-<span class="sig-prename descclassname"><span class="pre">tintervals.deadtime.</span></span><span class="sig-name descname"><span class="pre">unc_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vals1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vals2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_fft</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.deadtime.unc_fft" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tintervals.deadtime.</span></span><span class="sig-name descname"><span class="pre">unc_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vals1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vals2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_fft</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.deadtime.unc_fft" title="Link to this definition"></a></dt>
 <dd><p>Calculate dead time uncertainty using the Fourier transform strategy [1].</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>vals1</strong> (<em>2d array</em>) – starting intervals in the form start,stop</p></li>
 <li><p><strong>vals2</strong> (<em>2d array</em>) – ending intervals in the form start, stop</p></li>
@@ -105,7 +121,7 @@ If ‘day’, it is converted to 86400, for example for intervals given in MJD.<
 <li><p><strong>return_fft</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, also return FFT arrays, by default False</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>unc</strong> (<em>float</em>) – Dead time uncertainty between vals1 and vals2</p></li>
 <li><p><strong>par</strong> (<em>dict</em>) – Dictionary with each component of the uncertainty for ‘wpm’, ‘fpm’, ‘wfm’, ‘ffm’, ‘rwfm’, ‘fwfm’
@@ -130,36 +146,155 @@ as the corresponding value of the Hadamar deviation of the noise at 1 s. See for
 </pre></div>
 </div>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id1"><span class="brackets">1</span></dt>
-<dd><p>Grebing et al., Optica, 3, 563-569 (2016)</p>
-</dd>
-<dt class="label" id="id2"><span class="brackets">2</span></dt>
-<dd><p>Dawkins et al., IEEE Trans. Ultrason., Ferroelect., Freq. Cont., 54, 918-925 (2007)</p>
-</dd>
-<dt class="label" id="id3"><span class="brackets">3</span></dt>
-<dd><p>Pizzocaro et al., Nature Physics, 17, 223-227 (2021)</p>
-</dd>
-<dt class="label" id="id4"><span class="brackets">4</span></dt>
-<dd><p>Nemitz et al., Metrologia,  58, 025006 (2021)</p>
-</dd>
-</dl>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Grebing et al., Optica, 3, 563-569 (2016)</p>
+</aside>
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>Dawkins et al., IEEE Trans. Ultrason., Ferroelect., Freq. Cont., 54, 918-925 (2007)</p>
+</aside>
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<p>Pizzocaro et al., Nature Physics, 17, 223-227 (2021)</p>
+</aside>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<p>Nemitz et al., Metrologia,  58, 025006 (2021)</p>
+</aside>
+</aside>
 </dd></dl>
 
-</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.deadtime.masercov_fft">
+<span class="sig-prename descclassname"><span class="pre">tintervals.deadtime.</span></span><span class="sig-name descname"><span class="pre">masercov_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.deadtime.masercov_fft" title="Link to this definition"></a></dt>
+<dd><p>Calculate covariance between intervals sampling the same maser noise.
+Note that this is not yet a dead-time covariance, that can be calculated by the law of propagation of uncertainties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vals</strong> (<em>list</em><em> of </em><em>2d array</em>) – list of sampling intervals in the form start,stop</p></li>
+<li><p><strong>wpm</strong> (<em>float</em><em>, </em><em>optional</em>) – white phase modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>fpm</strong> (<em>float</em><em>, </em><em>optional</em>) – flicker phase modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>wfm</strong> (<em>float</em><em>, </em><em>optional</em>) – white frequency modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>ffm</strong> (<em>float</em><em>, </em><em>optional</em>) – flicker frequency modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>rwfm</strong> (<em>float</em>) – random walk frequency modulation noise, Adev normalized, optional, by default 0.</p></li>
+<li><p><strong>fwfm</strong> (<em>float</em><em>, </em><em>optional</em>) – flicker walk frequency modulation noise, Hadamar dev normalized, by default 0.</p></li>
+<li><p><strong>step</strong> (<em>float</em><em>, </em><em>optional</em>) – minimum time interval in seconds, by default 1</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em> or </em><em>'day'</em><em>, </em><em>optional</em>) – scale of the input intervals, by default 1.
+If ‘day’, it is converted to 86400, for example for intervals given in MJD.</p></li>
+<li><p><strong>ext_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – extension factor (padding) of the FFT, by default 10</p></li>
+<li><p><strong>return_dict</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, also return a tally of covariance by noise type, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>cov</strong> (<em>2d array</em>) – Covariance from the maser noise sampled by different intervals.</p></li>
+<li><p><strong>par</strong> (<em>dict</em>) – Dictionary each covariance for ‘wpm’, ‘fpm’, ‘wfm’, ‘ffm’, ‘rwfm’, ‘fwfm’.
+Only provided if <cite>return_dict</cite> is True.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Noise type ‘wpm’, ‘fpm’, ‘wfm’, ‘ffm’, ‘rwfm’ corresponds to the usual power-law noise and should be given
+as the corresponding value of the Allan deviation of the noise at 1 s. See for example [2].
+Noise type ‘fwfm’ corresponds to flicker walk frequency noise and should be given
+as the corresponding value of the Hadamar deviation of the noise at 1 s. See for example [3][4].</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Grebing et al., Optica, 3, 563-569 (2016)</p>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>Dawkins et al., IEEE Trans. Ultrason., Ferroelect., Freq. Cont., 54, 918-925 (2007)</p>
+</aside>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<p>Pizzocaro et al., Nature Physics, 17, 223-227 (2021)</p>
+</aside>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<p>Nemitz et al., Metrologia,  58, 025006 (2021)</p>
+</aside>
+</aside>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.deadtime.cov_fft">
+<span class="sig-prename descclassname"><span class="pre">tintervals.deadtime.</span></span><span class="sig-name descname"><span class="pre">cov_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vals1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vals2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fpm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ffm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwfm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.deadtime.cov_fft" title="Link to this definition"></a></dt>
+<dd><p>Calculate covariance for pairs of intervals sampling the same maser noise.
+From an input of two list of intervals of length N, returns a NxN covariance matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vals1</strong> (<em>list</em><em> of </em><em>2d array</em>) – list of sampling intervals in the form start,stop</p></li>
+<li><p><strong>vals2</strong> (<em>list</em><em> of </em><em>2d array</em><em> (</em><em>same length as vals1</em><em>)</em>) – list of sampling intervals in the form start,stop</p></li>
+<li><p><strong>wpm</strong> (<em>float</em><em>, </em><em>optional</em>) – white phase modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>fpm</strong> (<em>float</em><em>, </em><em>optional</em>) – flicker phase modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>wfm</strong> (<em>float</em><em>, </em><em>optional</em>) – white frequency modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>ffm</strong> (<em>float</em><em>, </em><em>optional</em>) – flicker frequency modulation noise, Adev normalized, by default 0.</p></li>
+<li><p><strong>rwfm</strong> (<em>float</em>) – random walk frequency modulation noise, Adev normalized, optional, by default 0.</p></li>
+<li><p><strong>fwfm</strong> (<em>float</em><em>, </em><em>optional</em>) – flicker walk frequency modulation noise, Hadamar dev normalized, by default 0.</p></li>
+<li><p><strong>step</strong> (<em>float</em><em>, </em><em>optional</em>) – minimum time interval in seconds, by default 1</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em> or </em><em>'day'</em><em>, </em><em>optional</em>) – scale of the input intervals, by default 1.
+If ‘day’, it is converted to 86400, for example for intervals given in MJD.</p></li>
+<li><p><strong>ext_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – extension factor (padding) of the FFT, by default 10</p></li>
+<li><p><strong>return_dict</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, also return a tally of covariance by noise type, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>cov</strong> (<em>2d array</em>) – Covariance of the dead time extrapolation.</p></li>
+<li><p><strong>par</strong> (<em>dict</em>) – Dictionary each covariance for ‘wpm’, ‘fpm’, ‘wfm’, ‘ffm’, ‘rwfm’, ‘fwfm’.
+Only provided if <cite>return_dict</cite> is True.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Noise type ‘wpm’, ‘fpm’, ‘wfm’, ‘ffm’, ‘rwfm’ corresponds to the usual power-law noise and should be given
+as the corresponding value of the Allan deviation of the noise at 1 s. See for example [2].
+Noise type ‘fwfm’ corresponds to flicker walk frequency noise and should be given
+as the corresponding value of the Hadamar deviation of the noise at 1 s. See for example [3][4].</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Grebing et al., Optica, 3, 563-569 (2016)</p>
+</aside>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>Dawkins et al., IEEE Trans. Ultrason., Ferroelect., Freq. Cont., 54, 918-925 (2007)</p>
+</aside>
+<aside class="footnote brackets" id="id11" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<p>Pizzocaro et al., Nature Physics, 17, 223-227 (2021)</p>
+</aside>
+<aside class="footnote brackets" id="id12" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<p>Nemitz et al., Metrologia,  58, 025006 (2021)</p>
+</aside>
+</aside>
+</dd></dl>
+
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="conversion.html" class="btn btn-neutral float-left" title="Time conversion functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cirt.html" class="btn btn-neutral float-left" title="BIPM Circular T intervals" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="rocitlinks.html" class="btn btn-neutral float-right" title="Handling optical link data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Marco Pizzocaro.</p>
+    <p>&#169; Copyright 2021-2025 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM).</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
