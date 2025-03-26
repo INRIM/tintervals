@@ -1,6 +1,37 @@
+[tool.poetry]
+name = "tintervals"
+version = "0.2.0"
+description = "A collection of tools to work with time intervals and to convert time data"
+authors = ["Marco Pizzocaro <m.pizzocaro@inrim.it>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^2.0.1"
+scipy = "^1.14.1"
+matplotlib = "^3.9.2"
+pandas = "^2.2.2"
+ciso8601 = "^2.3.2"
+pyyaml = "^6.0.2"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.3"
+ipython = "^8.27.0"
+
+[tool.poetry.group.doc.dependencies]
+sphinx = "^7.4.7"
+myst-parser = "^3.0.1"
+sphinx-rtd-theme = "^2.0.0"
+sphinx-autobuild = "^2024.9.3"
+sphinx-autoapi = "^3.3.1"
+starlette = "^0.41.0"
+autodocsumm = "^0.2.14"
+
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+line-length = 120
