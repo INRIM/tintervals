@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timetags and time intervals functions &mdash; tintervals 0.1.0 documentation</title>
+  <title>Timetags and time intervals functions &mdash; tintervals 0.1.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -40,6 +40,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Timetags and time intervals functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conversion.html">Time conversion functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cirt.html">BIPM Circular T intervals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deadtime.html">Deadtime uncertainty functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rocitlinks.html">Handling optical link data</a></li>
 </ul>
@@ -100,6 +101,12 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tintervals.intervals.csaverage" title="tintervals.intervals.csaverage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">csaverage</span></code></a>(f, ti, to[, axis])</p></td>
 <td><p>Average data in different time intervals.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tintervals.intervals.add_break" title="tintervals.intervals.add_break"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_break</span></code></a>(vals, brk)</p></td>
+<td><p>Add a break to given start-stop intervals.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tintervals.intervals.remove_break" title="tintervals.intervals.remove_break"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_break</span></code></a>(vals, brk)</p></td>
+<td><p>Remove a break from given start/stop intervals.</p></td>
 </tr>
 </tbody>
 </table>
@@ -316,6 +323,68 @@ It uses linear interpolation of the data and can work with gaps in the data.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.intervals.add_break">
+<span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">add_break</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.add_break" title="Permalink to this definition"></a></dt>
+<dd><p>Add a break to given start-stop intervals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vals</strong> (<em>2d array</em>) – Start/stop intervals</p></li>
+<li><p><strong>brk</strong> (<em>float</em>) – Break to be inserted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>New intervals with added break.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>2d array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_break</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="go">array([[0. , 1. ],</span>
+<span class="go">           [1. , 1.5],</span>
+<span class="go">           [1.5, 2. ],</span>
+<span class="go">           [2. , 3. ]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tintervals.intervals.remove_break">
+<span class="sig-prename descclassname"><span class="pre">tintervals.intervals.</span></span><span class="sig-name descname"><span class="pre">remove_break</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tintervals.intervals.remove_break" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a break from given start/stop intervals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vals</strong> (<em>2d array</em>) – Start/stop intervals</p></li>
+<li><p><strong>brk</strong> (<em>float</em>) – Break to be removed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>New intervals with break removed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>2d array</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>New intervals with added break.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>2d array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remove_break</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">array([[0. , 1. ],</span>
+<span class="go">           [1. , 3. ]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 
@@ -329,7 +398,7 @@ It uses linear interpolation of the data and can work with gaps in the data.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Marco Pizzocaro.</p>
+    <p>&#169; Copyright 2022, 2023 Marco Pizzocaro.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

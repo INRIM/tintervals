@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Handling optical link data &mdash; tintervals 0.1.0 documentation</title>
+  <title>Handling optical link data &mdash; tintervals 0.1.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -73,12 +72,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="handling-optical-link-data">
+  <div class="section" id="handling-optical-link-data">
 <h1>Handling optical link data<a class="headerlink" href="#handling-optical-link-data" title="Permalink to this headline"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">tintervals.rocitlinks</span></code> provides a structure to handle frequency data in the format established in the <a class="reference external" href="http://empir.npl.co.uk/rocit/">EMPIR project ROCIT</a>.</p>
 <p>The package can handle data in fractional frequency or transfer beat notation based on the math in
 <a class="reference external" href="https://link.aps.org/doi/10.1103/PhysRevResearch.2.043269">Lodewyck et al.,  “Universal formalism for data sharing and processing in clock comparison networks”, Phys. Rev. Research  2, 043269 (2020).</a></p>
-<section id="basic-usage">
+<div class="section" id="basic-usage">
 <h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline"></a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import tintervals.rocitlinks as rl
 
@@ -96,8 +95,8 @@ days, daylink, dcount = rl.link_average(reslink, &#39;day&#39;)
 rl.save_link_to_dir(&#39;./Output&#39;, daylink)
 </pre></div>
 </div>
-</section>
-<section id="module-tintervals.rocitlinks">
+</div>
+<div class="section" id="module-tintervals.rocitlinks">
 <span id="module-documentation"></span><h2>Module documentation<a class="headerlink" href="#module-tintervals.rocitlinks" title="Permalink to this headline"></a></h2>
 <p><strong>Classes:</strong></p>
 <table class="longtable docutils align-default">
@@ -485,8 +484,8 @@ For example:</p>
 (or load and invert the links from directories ‘A-B’, ‘B-C’ and ‘C-D’).</p>
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
@@ -498,7 +497,7 @@ For example:</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Marco Pizzocaro.</p>
+    <p>&#169; Copyright 2022, 2023 Marco Pizzocaro.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
