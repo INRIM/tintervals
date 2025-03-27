@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.interpolate
+
 # import warnings
 
 
@@ -143,7 +144,7 @@ def split(a, base=10.0):
     a       : 2-d array
                     intervals in the form (start,stop).
     base    : float
-                    base interval (generated intervals will be mutiple of base).
+                    base interval (generated intervals will be multiple of base).
     Returns
     -------
     2-d array
@@ -162,6 +163,47 @@ def split(a, base=10.0):
         start = np.ceil(x[0] / base) * base
         stop = np.floor(x[1] / base) * base
         tags = np.arange(start, stop + base, base)
+        res += list(np.column_stack((tags[:-1], tags[1:])))
+
+    return np.array(res)
+
+
+def semi_split(a, base=10.0, offset=0, mino=0.5):
+    """
+    Add time intervals in regular steps.
+
+    Given some intervals, return new intervals in a finer grid, where new start/stop are in regular steps
+    avoiding adding intervals that are too small.
+
+    Parameters
+    ----------
+    a       : 2-d array
+            intervals in the form (start,stop).
+    base    : float
+            base interval (generated intervals will be multiple of base).
+    mino    : float
+            minimum fraction of base required to introduce a new interval by default 0.5
+    Returns
+    -------
+    2-d array
+        intervals in the form (start,stop),
+        with added start/stop multiple of base (only if the new interval is > base * mino)
+
+    Examples
+    --------
+
+    >>> semi_split(np.array([[1,31]]), 10)
+    array([[ 1., 10.],[ 10., 20.],[ 20., 31.])
+
+    """
+
+    res = []
+    for x in a:
+        start = np.ceil((x[0] - offset) / base + mino) * base + offset
+        stop = np.floor((x[1] - offset) / base - mino) * base + offset
+
+        tags = [x[0]] + list(np.arange(start, stop + base, base)) + [x[1]]
+
         res += list(np.column_stack((tags[:-1], tags[1:])))
 
     return np.array(res)
