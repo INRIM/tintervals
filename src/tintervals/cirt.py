@@ -1,7 +1,14 @@
-from datetime import datetime, timezone
-from dateutil import relativedelta, rrule
-import tintervals as ti
+from datetime import datetime, timedelta, timezone
+
 import numpy as np
+
+import tintervals as ti
+
+
+def _next_month(year, month):
+    if month == 12:
+        return year + 1, 1
+    return year, month + 1
 
 
 def cirt2mjd(year, month):
@@ -20,12 +27,13 @@ def cirt2mjd(year, month):
             Circular-T start and stop as MJD
     """
     # year + month -> circular T
-    x = datetime(year, month, 1, tzinfo=timezone.utc)
-    s = x + relativedelta.relativedelta(days=-1)
-    e = x + relativedelta.relativedelta(months=1) + relativedelta.relativedelta(days=-1)
+    next_year, next_month = _next_month(year, month)
 
-    s_mjd = ti.epoch2mjd(ti.datetime2epoch(s))
-    e_mjd = ti.epoch2mjd(ti.datetime2epoch(e))
+    first = datetime(year, month, 1, tzinfo=timezone.utc)
+    next_first = datetime(next_year, next_month, 1, tzinfo=timezone.utc)
+
+    s_mjd = ti.datetime2mjd(first - timedelta(days=1))
+    e_mjd = ti.datetime2mjd(next_first - timedelta(days=1))
 
     s_mod = (s_mjd + 1) % 5
     e_mod = (e_mjd + 1) % 5
@@ -51,7 +59,7 @@ def mjd2cirt(mjd):
     return dt.year, dt.month
 
 
-def cirtvals(start, stop=None):
+def cirt_vals(start, stop=None):
     """Calculate MJD intervals corresponding to the BIPM Circular Ts between start and stop.
 
 
@@ -67,65 +75,30 @@ def cirtvals(start, stop=None):
     2d array
             start, stop intervals in MJD for each Circular T
     """
-    # if isinstance(start, datetime):
-    # 	start_mjd = ti.datetime2mjd(start)
-    # else:
-    # 	start_mjd = start
-    # 	start = ti.mjd2datetime(start)
-
-    # if stop is None:
-    # 	stop = datetime.utcnow()
-
-    # if isinstance(stop, datetime):
-    # 	stop_mjd = ti.datetime2mjd(stop)
-    # else:
-    # 	stop_mjd = stop
-    # 	stop = ti.mjd2datetime(stop)
-
-    # # for rrule start and stop should be extened to get all circularT intervals, inclusive
-    # dtstart = start.replace(day=1).replace(tzinfo=None) #rrule does not like tzinfo
-    # until = (stop + relativedelta.relativedelta(months=2)).replace(tzinfo=None)
-
-    # months = list(rrule.rrule(rrule.MONTHLY, bymonthday=1, dtstart=dtstart, until=until))
-
-    # # convert each 1st of month to start of circularT
-    # # timezone.utc assure proper conversion at integer mjds
-    # s_mjd = np.array([ti.epoch2mjd(ti.datetime2epoch(s.replace(tzinfo=timezone.utc))) for s in months])
-    # s_mod = (s_mjd + 1)%5
-
-    # breaks = s_mjd-s_mod
-
-    # vals = np.column_stack((breaks[:-1], breaks[1:]))
-
-    # # mask result as the extension done before may have been too extreme
-    # mask = (vals[:,1] > start_mjd) & (vals[:,0] < stop_mjd)
-    # return vals[mask]
-
     if isinstance(start, datetime):
         start = ti.datetime2mjd(start)
 
     if stop is None:
-        stop = datetime.utcnow()
+        stop = datetime.now(timezone.utc)
 
     if isinstance(stop, datetime):
         stop = ti.datetime2mjd(stop)
 
-    starty, startm = mjd2cirt(start)
-    stopy, stopm = mjd2cirt(stop)
+    year, month = mjd2cirt(start)
+    stop_year, stop_month = mjd2cirt(stop)
 
-    dtstart = datetime(starty, startm, 1)
-    until = datetime(stopy, stopm, 1) + relativedelta.relativedelta(months=1)
-    months = list(rrule.rrule(rrule.MONTHLY, bymonthday=1, dtstart=dtstart, until=until))
+    intervals = []
 
-    # # convert each 1st of month to start of circularT
-    # # timezone.utc assure proper conversion at integer mjds
-    s_mjd = np.array(
-        [ti.epoch2mjd(ti.datetime2epoch(s.replace(tzinfo=timezone.utc))) for s in months]
-    )  # first of every month
-    s_mjd -= 1  # last of every month
-    s_mod = (s_mjd + 1) % 5
+    while (year, month) <= (stop_year, stop_month):
+        intervals.append(cirt2mjd(year, month))
+        year, month = _next_month(year, month)
 
-    breaks = s_mjd - s_mod
+    return np.array(intervals)
 
-    vals = np.column_stack((breaks[:-1], breaks[1:]))
-    return vals
+
+def yymm2cirt_number(yymm):
+    """Return the Circular T number corresponding to YYMM."""
+    year = 2000 + int(yymm[:2])
+    month = int(yymm[2:])
+
+    return 312 + 12 * (year - 2014) + month
