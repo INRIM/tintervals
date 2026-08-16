@@ -1,6 +1,6 @@
 [project]
 name = "tintervals"
-version = "0.2.0"
+version = "0.3.0"
 description = "A collection of tools to work with time intervals and to convert time data"
 authors = [
     { name = "Marco Pizzocaro", email = "m.pizzocaro@inrim.it" },

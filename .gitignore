@@ -174,3 +174,6 @@ __pycache__/
 *~
 readme-commands.txt
 
+# Ignore the Sphinx build directory
+docs/_build/
+
