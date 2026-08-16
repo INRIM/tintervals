@@ -30,7 +30,7 @@ assert ti.mjd_from_epoch(ti.datetime2epoch(datetime(2021, 9, 22, 0, 0, 0, tzinfo
 # ipython = get_ipython()
 
 # test circular T functions
-print(ti.cirtt2mjd(2023,2))
+print(ti.cirt2mjd(2023,2))
 print(ti.mjd2cirt(59974))
 print(ti.cirtvals(59823,59849) )
 
