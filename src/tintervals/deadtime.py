@@ -1,6 +1,7 @@
 # from intervals import intervals2weights
-from tintervals.intervals import intervals2weights
 import numpy as np
+
+from tintervals.intervals import intervals2weights
 
 
 def unc_fft(
@@ -402,61 +403,3 @@ def cov_fft(
         return ret[0]
     else:
         return ret
-
-
-if __name__ == "__main__":
-    from matplotlib.pyplot import *
-
-    close("all")
-    ion()
-
-    import statsmodels.stats.moment_helpers as help
-
-    vals1 = np.array([[3, 4]])  # np.array([[0.2,0.6],[0.8,0.9]])
-    vals2 = np.array([[0, 1]])
-    noise_dict = {"wpm": 1.5e-13, "wfm": 3.5e-14, "ffm": 5.5e-16, "fwfm": 0 * 2.5e-22}
-
-    unc, par, ft_freq, ft_sens, psd = unc_fft(
-        vals1, vals2, **noise_dict, step=100, scale="day", return_dict=True, return_fft=True, ext_factor=10
-    )
-
-    print("Uncertainty = ", unc)
-    print("Tally = ", par)
-
-    cov, noise_cov = masercov_fft(
-        [vals1, vals2, np.array([[3, 4]])], **noise_dict, step=100, scale="day", return_dict=True, ext_factor=10
-    )
-
-    covunc = np.sqrt(cov[0, 0] + cov[1, 1] - 2 * cov[0, 1])
-
-    print("Maser Covariance = ", cov)
-    print("Maser Correlation = ", help.cov2corr(cov))
-    print("Dead time uncertainty from covariance = ", covunc)
-
-    # target intervals = "GPS"
-    supj = [np.array([[0, 20]]), np.array([[0, 20]]), np.array([[0, 20]]), np.array([[30, 40]])]
-
-    # measured intervals = "clock uptime"
-    supi = [np.array([[5, 15]]), np.array([[5, 16]]), np.array([[0, 5], [15, 20]]), np.array([[31, 36]])]
-
-    cov2, noise_cov2 = cov_fft(supj, supi, **noise_dict, step=100, scale="day", return_dict=True, ext_factor=10)
-
-    print("Dead uncs 2 = ", np.sqrt(np.diag(cov2)))
-    print("Covariance2 = ", cov2)
-    print("Correlation2 = ", help.cov2corr(cov2))
-
-    # fig, ax1 = subplots()
-    # ax2  =ax1.twinx()
-
-    # ax1.loglog(ft_freq, ft_sens, 'b-', label='Sensitivity')
-    # ax2.loglog(ft_freq, psd, 'r.', label='Noise')
-
-    # ax1.set_xlabel('Freq /Hz')
-    # ax1.set_ylabel('Sesnitivity')
-    # ax2.set_ylabel('PSD /(1/Hz)')
-
-    # lines, labels = ax1.get_legend_handles_labels()
-    # lines2, labels2 = ax2.get_legend_handles_labels()
-    # ax2.legend(lines + lines2, labels + labels2, loc=0)
-
-    # fig.tight_layout()
