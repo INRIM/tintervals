@@ -2034,11 +2034,15 @@ dependencies = [
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
     { name = "numpy", version = "2.5.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-    { name = "pandas" },
-    { name = "pyyaml" },
     { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
     { name = "scipy", version = "1.18.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+]
+
+[package.optional-dependencies]
+rocitlinks = [
+    { name = "pandas" },
+    { name = "pyyaml" },
 ]
 
 [package.dev-dependencies]
@@ -2061,10 +2065,11 @@ requires-dist = [
     { name = "ciso8601", specifier = ">=2.3.2,<3" },
     { name = "matplotlib", specifier = ">=3.9.2,<4" },
     { name = "numpy", specifier = ">=2.0.1,<3" },
-    { name = "pandas", specifier = ">=2.2.2,<3" },
-    { name = "pyyaml", specifier = ">=6.0.2,<7" },
+    { name = "pandas", marker = "extra == 'rocitlinks'", specifier = ">=2.2.2,<3" },
+    { name = "pyyaml", marker = "extra == 'rocitlinks'", specifier = ">=6.0.2,<7" },
     { name = "scipy", specifier = ">=1.14.1,<2" },
 ]
+provides-extras = ["rocitlinks"]
 
 [package.metadata.requires-dev]
 dev = [
