@@ -27,8 +27,6 @@ or directly from github:
 
 * `numpy`, `scipy`
 * `ciso8601` (for fast ISO format reading)
-* `pandas` (used only for fast file loading)
-* `pyyaml`
 
 ## Basic usage
 
@@ -91,9 +89,16 @@ Functions to calculate deadtime uncertainty:
 ## Advanced usage
 For handling optical links:
 
-`import ti.rocitlinks as rl`
+`pip install "tintervals[rocitlinks]"`
+
+`import tintervals.rocitlinks as rl`
 
 See the docs for more details.
+
+Extra dependencies:
+* `pandas` (used only for fast file loading)
+* `pyyaml`
+
 
 ## License
 
@@ -104,13 +109,13 @@ See the docs for more details.
 This work is partially funded by the European Metrology Program for Innovation and Research (EMPIR) project 18SIB05 ROCIT.
 The EMPIR initiative is cofunded by the European Union’s Horizon 2020 research and innovation programme and the EMPIR Participating States.
 
-This work has received funding from the European Partnership on Metrology, co-financed by the European Union’s Horizon Europe Research and Innovation Programme and by the Participating States, under grant number 22IEM01 TOCK.
+This work was supported by the projects 22IEM01 TOCK and 25IEM09 Arcsecond. The projects 22IEM01 TOCK and 25IEM09 Arcsecond has received funding from the European Partnership on Metrology, co-financed from the European Union’s Horizon Europe Research and Innovation Programme and by the Participating States.
 
 ![badge](./Acknowledgement%20badge.png)
 
 ## Authors
 
-(c) 2021-2025 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
+(c) 2021-2026 Marco Pizzocaro - Istituto Nazionale di Ricerca Metrologica (INRIM)
 
 ## Speed test
 ```
